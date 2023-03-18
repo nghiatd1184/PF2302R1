@@ -4,25 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TẠO BẢNG</title>
 </head>
 <body>
     <form>
-        <p>Nhập cột</p>
-        <input type="number" id="nhapcot">
-        <p>Nhập dòng</p>
-        <input type="number" id="nhapdong">
-        <br><br>
-        <button type="button">Tạo</button>
+        <fieldset style="width: 0px;">
+            <legend><b>BÀI TẬP TẠO BẢNG</b></legend>
+            Nhập số dòng:
+            <input type="number" id="nhapdong" placeholder="Số lớn hơn 1"><br><br>
+            Nhập số cột:
+            <input type="number" id="nhapcot" placeholder="Số lớn hơn 1"><br><br>
+            <button type="button" id="nutTao">Tạo bảng</button>
+        </fieldset>
     </form>
-    <div id="Kết quả"></div>
+    <br>
+    <div id="ketQua"></div>
     <script>
-        let soDongNhap = document.getElementById("nhapcot");
+        let soDongNhap = document.getElementById("nhapdong");
         let soCotNhap = document.getElementById("nhapcot");
+        let nutTao = document.getElementById("nutTao");
         
         let soDong, soCot;
 
-        soDongNhap.addEventListener('change')
+        soDongNhap.addEventListener('change', function (e) {
+            soDong = parseInt(e.target.value);
+            console.log(soDong);
+        })
+
+        soCotNhap.addEventListener('change', function (e) {
+            soCot = parseInt(e.target.value);
+            console.log(soCot);
+        })
+
+        nutTao.addEventListener('click',function () {
+            if (soCot>0 && soDong>0) {
+                let khoi = document.getElementById("ketQua");
+                let bang = document.createElement("table");
+                bang.cellPadding = "5";
+                bang.cellSpacing = "0";
+                bang.border = "1";
+
+                let kiemTraLapDong = 1;
+                let kiemTraLapCot = 1;
+
+                while (kiemTraLapDong<=soDong) {
+                    let taoDong = document.createElement("tr");
+                    while (kiemTraLapCot<=soCot) {
+                        let taoCot = document.createElement("td");
+                        taoCot.innerHTML = `ô ${kiemTraLapCot}`;
+                        taoDong.appendChild(taoCot);
+                        kiemTraLapCot = ++kiemTraLapCot;
+                    }
+                    kiemTraLapCot = 1;
+                    kiemTraLapDong = ++kiemTraLapDong;
+                    bang.appendChild(taoDong);
+            }
+
+            khoi.appendChild(bang);
+            } else {
+                alert("Vui lòng nhập đúng định dạng!");
+                window.location.reload();
+            }     
+        })
     </script>
 </body>
 </html>
