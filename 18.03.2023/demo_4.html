@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="xuLyThemDoan()">
+        Bấm để thêm
+    </button>
+    <div id="myDiv">
+        <p id="p1">đoạn 1</p>
+        <p id="p2">đoạn 2</p>
+    </div>
+    <script>
+        function xuLyThemDoan() {
+            let myDiv = document.getElementById("myDiv");
+            let theP = document.getElementsByTagName("p")
+
+            let newElement = document.createElement("p");
+            newElement.innerHTML = "Đoạn " + (theP.length + 1); // lenght là thẻ đếm số lượng thẻ p bởi vì biến theP được getelement bằng thẻ p
+
+            myDiv.appendChild(newElement);
+        }
+    </script>
+</body>
+</html>

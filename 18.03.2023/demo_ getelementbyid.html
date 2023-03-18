@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="tieude">
+        CHÀO MỪNG CÁC <b>BẠN</b> LỚP 123
+    </h1>
+    <script>
+        let theH1 = document.getElementById("tieude"); // gán giá trị cho biến = nội dung của thẻ có id kia
+        alert(theH1.innerHTML); // chọn luôn cả text lẫn các thẻ html
+        alert(theH1.innerText); // chỉ chọn text
+        
+        theH1.style.color = "blue";
+        theH1.style.background = "yellow";
+
+        let noiDung = prompt("Nhập text");
+        theH1.innerHTML = noiDung;
+        
+    </script>
+</body>
+</html>

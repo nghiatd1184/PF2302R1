@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="ketQua"></div>
+    <script>
+        let khoi = document.getElementById("ketQua");
+        let myTable = document.createElement("table"); // gắn biến mytable = 1 thẻ table
+        myTable.cellPadding = "5";
+        myTable.cellSpacing = "0";
+        myTable.border = "1";
+
+        let myRow = document.createElement("tr"); // gắn biến myrow = thẻ tr (thẻ dòng)
+        let col1 = document.createElement("td"); // gắn biến col1 = thẻ td (thẻ cột)
+        let col2 = document.createElement("td");
+        let col3 = document.createElement("td");
+        col1.innerHTML = "ô 1";
+        col2.innerHTML = "ô 2";
+        col3.innerHTML = "ô 3";
+
+        myRow.appendChild(col1); // thêm biến td col1 vào biến tr myrow
+        myRow.appendChild(col2);
+        myRow.appendChild(col3);
+
+        myTable.appendChild(myRow);
+     // thêm thẻ dòng vào thẻ table
+        khoi.appendChild(myTable);
+    // thêm thẻ table vào thẻ div
+    </script>
+</body>
+</html>

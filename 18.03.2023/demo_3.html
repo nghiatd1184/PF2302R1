@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myDiv">
+        <p id="p1">đoạn 1</p>
+        <p id="p2">đoạn 2</p>
+    </div>
+    <script>
+        // chèn p3 lên trước p1
+        let p3 = document.createElement("div");
+        p3.innerHTML = "<b>Đoạn</b> 3";
+
+        let div1 = document.getElementById("myDiv");
+        let p1 = document.getElementById("p1");
+        div1.insertBefore(p3, p1);
+
+        // xóa p2
+        document.getElementById("p2").remove();
+    </script>
+</body>
+</html>
