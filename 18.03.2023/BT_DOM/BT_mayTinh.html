@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính</title>
+</head>
+<body>
+    <form>
+        <h1>Máy Tính Cơ Bản</h1>
+        <input type="number" id="soTruoc">
+        <input type="number" id="soSau">
+        <br><br>
+        <button type="button" id="cong" onclick="tinhCong()">Cộng (+)</button>
+        <button type="button" id="tru">Trừ (-)</button>
+        <button type="button" id="nhan">Nhân (x)</button>
+        <button type="button" id="chia">Chia (/)</button>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+
+    <script>
+        let ketQua = document.getElementById("ketQua");
+
+        function tinhCong() {
+            let soTruocIp = document.getElementById("soTruoc");
+            let soSauIp = document.getElementById("soSau");
+            let soTruoc = parseFloat(soTruocIp.value);
+            let soSau = parseFloat(soSauIp.value);
+            let a = soTruoc + soSau;
+            ketQua.innerHTML = "Kết Quả Phép Cộng: " + a;
+        }
+    </script>
+</body>
+</html>

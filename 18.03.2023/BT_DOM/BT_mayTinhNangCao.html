@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính</title>
+</head>
+<body>
+    <form>
+        <h1>Máy Tính Cơ Bản</h1>
+        <textarea id="hienThi" cols="27.5" rows="2"></textarea>
+        <br><br>
+        <table>
+            <tr>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="bay">7</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="tam">8</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="chin">9</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="chia">/</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="bon">4</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="nam">5</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="sau">6</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="nhan">x</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="mot">1</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="tam">2</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="chin">3</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="tru">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="khong">0</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="cham">.</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="bang">=</button>
+                </td>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button" id="cong">+</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+
+    <script>
+        let ketQua = document.getElementById("ketQua");
+
+        function tinhCong() {
+            let soTruocIp = document.getElementById("soTruoc");
+            let soSauIp = document.getElementById("soSau");
+            let soTruoc = parseFloat(soTruocIp.value);
+            let soSau = parseFloat(soSauIp.value);
+            let a = soTruoc + soSau;
+            ketQua.innerHTML = "Kết Quả Phép Cộng: " + a;
+        }
+    </script>
+</body>
+</html>
