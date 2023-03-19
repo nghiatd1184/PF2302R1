@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let pi = Math.PI;
+        let banKinh = prompt("Nhập bán kính (cm):");
+
+        let r = parseFloat(banKinh);
+    
+        if (!isNaN(r) && r>0) {
+            let s = Math.pow(r,2)*pi; //math.pow là bình phương r
+            let c = 2*r*pi;
+            alert(`Hình tròn có chu vi = ${r}cm có chu vi = ${Math.round(c)}cm và diện tích = ${s.toFixed(2)}cm2`); //math.round là làm tròn đến số gần nhất
+            //biến.toFixed(x) là lấy x số thập phân ở sau
+        } else {
+            alert("Vui lòng nhập đúng định dạng số!");
+        }
+    </script>
+</body>
+</html>

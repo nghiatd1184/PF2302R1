@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend><h2>FORM ĐĂNG KÝ</h2></legend>
+            <b>Họ tên:</b>
+            <br>
+            <input name="hoten" type="text">
+            <br>
+            <b>Mật khẩu:</b>
+            <br>
+            <input type="password" name="matkhau">
+            <br>
+            <b>Email:</b>
+            <br>
+            <input type="email" name="email">
+            <br>
+            <b>Số điện thoại:</b>
+            <br>
+            <input type="tel" name="dienthoai">
+            <br>
+            <b>Giới tính:</b>
+            <br>
+            <input type="radio" name="gioitinh" value="1" id="">Nữ
+            <input type="radio" name="gioitinh" value="0" id="">Nam
+            <input type="radio" name="gioitinh" value="-1" id="">Khác
+            <br>
+            <b>Sở thích:</b>
+            <br>
+            <input type="checkbox" name="dulich" value="DL">Du Lịch <br>
+            <input type="checkbox" name="doctruyen" value="DT">Đọc truyện <br>
+            <input type="checkbox" name="choigame" value="CG">Chơi game <br>
+            <input type="checkbox" name="dabong" value="DB">Đá Bóng <br>
+            <b>Năm sinh:</b>
+            <br>
+            <input type="date" name="namsinh">
+            <br>
+            <b>Nơi Sinh</b>
+            <br>
+            <select name="noisinh">
+                <option value="hanoi">Hà Nội</option>
+                <option value="danang">Đà Nẵng</option>
+                <option value="hochiminh">TP. Hồ Chí Minh</option>
+            </select>
+            <br>
+            <b>Thông tin thêm:</b>
+            <br>
+            <textarea name="thongtinthem" cols="50" rows="4"></textarea>
+            <br>
+            <button type="submit">Gửi</button>
+            <button type="reset">Nhập lại</button>
+        </fieldset>
+    </form>
+    <hr>
+    <h2>DANH SÁCH LỚP</h2>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <th>STT</th>
+            <th>Họ và tên</th>
+            <th>SĐT</th>
+        </tr>
+        <tr>
+            <th>1</th>
+            <th>Nguyễn Văn A</th>
+            <th>0978118452</th>
+        </tr>
+        <tr>
+            <th>2</th>
+            <th>Nguyễn Văn B</th>
+            <th>0978118453</th>
+        </tr>
+        <tr>
+            <td colspan="3">Tổng cộng: 2</td>
+        </tr>
+    </table>
+</body>
+</html>
