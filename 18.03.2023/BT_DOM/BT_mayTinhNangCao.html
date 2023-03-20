@@ -8,9 +8,13 @@
 </head>
 <body>
     <form>
-        <h1>Máy Tính Cơ Bản</h1>
-        <textarea id="hienThi" cols="27.5" rows="2"></textarea>
-        <br><br>
+        <h2 style="font-size: 24.6px;">Máy Tính Nâng Cao</h2>
+
+        <div id="hienThi" style="border: 1px;height: 70px;width: 213px;border: solid 1px black;line-height: 5px;">
+            <p id="p1" style="text-align: right;font-size: 15px;color: rgb(104, 104, 104);"></p>
+            <p id="p2" style="text-align: right;font-size: 30px;"></p>
+        </div>
+
         <table>
             <tr>
                 <td>
@@ -45,10 +49,10 @@
                     <button style="height: 50px;width: 50px;" type="button" id="mot">1</button>
                 </td>
                 <td>
-                    <button style="height: 50px;width: 50px;" type="button" id="tam">2</button>
+                    <button style="height: 50px;width: 50px;" type="button" id="hai">2</button>
                 </td>
                 <td>
-                    <button style="height: 50px;width: 50px;" type="button" id="chin">3</button>
+                    <button style="height: 50px;width: 50px;" type="button" id="ba">3</button>
                 </td>
                 <td>
                     <button style="height: 50px;width: 50px;" type="button" id="tru">-</button>
@@ -68,22 +72,15 @@
                     <button style="height: 50px;width: 50px;" type="button" id="cong">+</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <button style="height: 50px;width: 50px;" type="button"
+                    onclick="window.location.reload()">C</button>
+                </td>
+            </tr>
         </table>
     </form>
     <br>
-    <div id="ketQua"></div>
-
-    <script>
-        let ketQua = document.getElementById("ketQua");
-
-        function tinhCong() {
-            let soTruocIp = document.getElementById("soTruoc");
-            let soSauIp = document.getElementById("soSau");
-            let soTruoc = parseFloat(soTruocIp.value);
-            let soSau = parseFloat(soSauIp.value);
-            let a = soTruoc + soSau;
-            ketQua.innerHTML = "Kết Quả Phép Cộng: " + a;
-        }
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
