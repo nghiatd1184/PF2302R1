@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính</title>
+</head>
+<body>
+    <form>
+        <h1>Máy Tính Cơ Bản</h1>
+        <input type="number" id="soTruoc">
+        <input type="number" id="soSau">
+        <br><br>
+        <button type="button" id="cong">Cộng (+)</button>
+        <button type="button" id="tru">Trừ (-)</button>
+        <button type="button" id="nhan">Nhân (x)</button>
+        <button type="button" id="chia">Chia (/)</button>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+
+    <script>
+        let ketQua = document.getElementById("ketQua");
+        let soTruocInput = document.getElementById("soTruoc");
+        let soSauInput = document.getElementById("soSau");
+        let soSau, soTruoc;
+
+        let cong = document.getElementById("cong");
+        let tru = document.getElementById("tru");
+        let nhan = document.getElementById("nhan");
+        let chia = document.getElementById("chia");
+
+        soTruocInput.addEventListener('change', function (e) {
+            soTruoc = e.target.value;
+        })
+
+        soSauInput.addEventListener('change', function (e) {
+            soSau = e.target.value;
+        })
+
+        cong.addEventListener('click', function () {
+            if ((soSau == "") || (soTruoc == "")) {
+                alert("Vui lòng nhập giá trị");
+            } else {
+                soTruoc = parseFloat(soTruoc);
+                soSau = parseFloat(soSau);
+                ketQua.innerHTML = `Kết quả phép cộng: ${soTruoc + soSau}`;
+            }
+        })
+    </script>
+</body>
+</html>

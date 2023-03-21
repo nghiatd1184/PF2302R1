@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <p>Nhập số chẵn</p>
+        <input type="number" id="nhapSo">
+        <button type="button" id="hienThiKetQua" onclick="kiemTraSoChan()">Kiểm Tra</button>
+        <button type="button" id="reset" onclick="xoaGiaTri()">Xóa giá trị</button>
+    </form>
+
+    <script>
+        function kiemTraSoChan() {
+            let soInput = document.getElementById("nhapSo").value;
+            if (soInput === "") {
+                alert("Vui lòng nhập giá trị!");
+            } else {
+                soInput = parseFloat(soInput);
+                if ((soInput%2) === 0) {
+                    alert(`${soInput} là số chẵn`);
+                } else {
+                    alert(`${soInput} là số lẻ`);
+            }
+            }
+        }
+
+        function xoaGiaTri() {
+            document.getElementById("nhapSo").value = '';
+        }
+    </script>
+</body>
+</html>

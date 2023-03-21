@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính</title>
+</head>
+<body>
+    <form>
+        <h1>Máy Tính Cơ Bản</h1>
+        <input type="number" id="soTruoc">
+        <input type="number" id="soSau">
+        <br><br>
+        <button type="button" id="cong" onclick="tinhCong()">Cộng (+)</button>
+        <button type="button" id="tru"  onclick="tinhTru()">Trừ (-)</button>
+        <button type="button" id="nhan" onclick="tinhNhan()">Nhân (x)</button>
+        <button type="button" id="chia" onclick="tinhChia()">Chia (/)</button>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+
+    <script>
+        let ketQua = document.getElementById("ketQua");
+
+        function tinhCong() {
+            let soTruoc = document.getElementById("soTruoc").value;
+            let soSau = document.getElementById("soSau").value;
+            if ((soSau === "") || (soTruoc === "")) {
+                alert("Vui lòng nhập giá trị");
+            } else {
+                soSau = parseFloat(soSau);
+                soTruoc = parseFloat(soTruoc);
+                let a = soTruoc + soSau;
+                ketQua.innerHTML = "Kết Quả Phép Cộng: " + a;
+            }
+        }
+
+        function tinhTru() {
+            let soTruoc = document.getElementById("soTruoc").value;
+            let soSau = document.getElementById("soSau").value;
+            if ((soSau === "") || (soTruoc === "")) {
+                alert("Vui lòng nhập giá trị");
+            } else {
+                soSau = parseFloat(soSau);
+                soTruoc = parseFloat(soTruoc);
+                let a = soTruoc - soSau;
+                ketQua.innerHTML = "Kết Quả Phép Trừ: " + a;
+            }
+        }
+
+        function tinhNhan() {
+            let soTruoc = document.getElementById("soTruoc").value;
+            let soSau = document.getElementById("soSau").value;
+            if ((soSau === "") || (soTruoc === "")) {
+                alert("Vui lòng nhập giá trị");
+            } else {
+                soSau = parseFloat(soSau);
+                soTruoc = parseFloat(soTruoc);
+                let a = soTruoc * soSau;
+                ketQua.innerHTML = "Kết Quả Phép Nhân: " + a;
+            }
+        }
+
+        function tinhChia() {
+            let soTruoc = document.getElementById("soTruoc").value;
+            let soSau = document.getElementById("soSau").value;
+            if ((soSau === "") || (soTruoc === "")) {
+                alert("Vui lòng nhập giá trị");
+            } else {
+                soSau = parseFloat(soSau);
+                soTruoc = parseFloat(soTruoc);
+                let a = soTruoc / soSau;
+                ketQua.innerHTML = "Kết Quả Phép Chia: " + a;
+            }
+        }
+
+    </script>
+</body>
+</html>
