@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>What is the “official” name of JavaScript?</h1>
+    <input type="text" id="answerInput">
+    <button type="button" id="check">Check!</button>
+    <div id="answer"></div>
+
+    <script>
+        let answerInput = document.getElementById("answerInput");
+        let check = document.getElementById("check");
+        let answer;
+        let displayAnswer = document.getElementById("answer");
+
+        answerInput.addEventListener('change',function (e) {
+            answer = e.target.value;
+        })
+
+        check.addEventListener('click', function () {
+            console.log(answer);
+            if (answer === undefined) {
+                displayAnswer.innerHTML = "Not input!";
+            } else if (answer === "ECMAScript") {
+                displayAnswer.innerHTML = 'Right!';
+            } else {
+                displayAnswer.innerHTML = 'Didn’t know? ECMAScript!';
+            }
+            answer = undefined;
+            answerInput.value = '';
+        })
+    </script>
+</body>
+</html>

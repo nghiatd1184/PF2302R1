@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <h1>Tính điểm ĐH khối D</h1>
+        <table>
+            <tr>
+                <td>
+                    Toán
+                </td>
+                <td>
+                    <input id="diemToan" type="number">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Văn
+                </td>
+                <td>
+                    <input id="diemVan" type="number">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Anh
+                </td>
+                <td>
+                    <input id="diemAnh" type="number">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Khu vực
+                </td>
+                <td>
+                    <select name="khuVuc" id="khuVuc">
+                        <option value="kv1">KV1</option>
+                        <option value="kv2NT">KV2-NT</option>
+                        <option value="kv2">KV2</option>
+                        <option value="kv3">KV3</option>
+                    </select>
+                </td>
+            </tr>
+        </table><br>
+        <button type="button" onclick="tinhDiem()">Tính điểm</button>
+        <h1 id="ketQua" style="color: red;"></h1>
+    </form>
+
+    <script>
+        function tinhDiem() {
+            let diemToan = parseFloat(document.getElementById("diemToan").value);
+            let diemVan = parseFloat(document.getElementById("diemVan").value);
+            let diemAnh = parseFloat(document.getElementById("diemAnh").value);
+            let khuVuc = document.getElementById("khuVuc").value;
+            let hienThi = document.getElementById("ketQua");
+            let ketQua;
+
+            console.log(diemAnh, diemToan, diemVan);
+
+            if (diemAnh !== NaN && diemToan !== NaN && diemVan !== NaN) {
+                if (khuVuc === "kv1") {
+                ketQua = diemToan + diemAnh + diemVan + 0.75;
+                hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
+                } else if (khuVuc === "kv2NT") {
+                ketQua = diemToan + diemAnh + diemVan + 0.5;
+                hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
+                } else if (khuVuc === "kv2") {
+                ketQua = diemToan + diemAnh + diemVan + 0.25;
+                hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
+                } else if (khuVuc === "kv3") {
+                ketQua = diemToan + diemAnh + diemVan;
+                hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
+            }
+            } else {
+                alert("Vui lòng nhập điểm");
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

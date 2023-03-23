@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let account = prompt("Nhập tài khoản:");
+
+        if (account === "") {
+            console.log(account);
+            alert('Vui lòng nhập tài khoản!');
+        } else if (account === "Admin") {
+            let password = prompt('Nhập mật khẩu:');
+            if (password === "") {
+                alert('Vui lòng nhập mật khẩu!');
+            } else if (password === "TheMaster") {
+                alert('Xin chào Admin!');
+            } else {
+                alert('Sai mật khẩu!');
+            }
+        } else {
+            console.log(account);
+            alert('Sai tài khoản!');
+        }
+    </script>
+</body>
+</html>
