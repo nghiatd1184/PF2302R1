@@ -9,7 +9,9 @@ let button7 = document.getElementById("bay");
 let button8 = document.getElementById("tam");
 let button9 = document.getElementById("chin");
 let buttonCham = document.getElementById("cham");
-
+let buttonMoNgoac = document.getElementById("moNgoac");
+let buttonDongNgoac = document.getElementById("dongNgoac");
+let buttonPhanTram = document.getElementById("phantram");
 let buttonCong = document.getElementById("cong");
 let buttonTru = document.getElementById("tru");
 let buttonNhan = document.getElementById("nhan");
@@ -18,11 +20,8 @@ let buttonBang = document.getElementById("bang");
 
 let dong1 = document.getElementById("p1");
 let dong2 = document.getElementById("p2");
-
 let phepToan;
 let ketQua = 0;
-let soT1 = 0;
-let soT2 = 0;
 
 button0.addEventListener('click',function () {
     dong2.innerHTML = dong2.innerHTML + button0.innerHTML;    
@@ -57,73 +56,30 @@ button9.addEventListener('click',function () {
 buttonCham.addEventListener('click',function () {
     dong2.innerHTML = dong2.innerHTML + buttonCham.innerHTML;    
 })
-
-buttonCong.addEventListener('click',function () {
-    if (ketQua == 0) {
-        soT1 = parseFloat(dong2.innerHTML);
-        dong1.innerHTML = dong2.innerHTML + "+";
-        dong2.innerHTML = "";
-    } else {
-        soT1 = ketQua;
-        dong1.innerHTML = ketQua + "+";
-        dong2.innerHTML = "";
-    }
+buttonMoNgoac.addEventListener('click',function () {
+    dong2.innerHTML = dong2.innerHTML + buttonMoNgoac.innerHTML;    
 })
-
-buttonTru.addEventListener('click',function () {
-    if (ketQua == 0) {
-        soT1 = parseFloat(dong2.innerHTML);
-        dong1.innerHTML = dong2.innerHTML + "-";
-        dong2.innerHTML = "";
-    } else {
-        soT1 = ketQua;
-        dong1.innerHTML = ketQua + "-";
-        dong2.innerHTML = "";
-    }
+buttonDongNgoac.addEventListener('click',function () {
+    dong2.innerHTML = dong2.innerHTML + buttonDongNgoac.innerHTML;    
 })
-
+buttonPhanTram.addEventListener('click',function () {
+    dong2.innerHTML = dong2.innerHTML + buttonPhanTram.innerHTML;    
+})
 buttonNhan.addEventListener('click',function () {
-    if (ketQua == 0) {
-        soT1 = parseFloat(dong2.innerHTML);
-        dong1.innerHTML = dong2.innerHTML + "x";
-        dong2.innerHTML = "";
-    } else {
-        soT1 = ketQua;
-        dong1.innerHTML = ketQua + "x";
-        dong2.innerHTML = "";
-    }
+    dong2.innerHTML = dong2.innerHTML + buttonNhan.innerHTML;    
 })
-
 buttonChia.addEventListener('click',function () {
-    if (ketQua == 0) {
-        soT1 = parseFloat(dong2.innerHTML);
-        dong1.innerHTML = dong2.innerHTML + "/";
-        dong2.innerHTML = "";
-    } else {
-        soT1 = ketQua;
-        dong1.innerHTML = ketQua + "/";
-        dong2.innerHTML = "";
-    }
+    dong2.innerHTML = dong2.innerHTML + buttonChia.innerHTML;    
+})
+buttonCong.addEventListener('click',function () {
+    dong2.innerHTML = dong2.innerHTML + buttonCong.innerHTML;    
+})
+buttonTru.addEventListener('click',function () {
+    dong2.innerHTML = dong2.innerHTML + buttonTru.innerHTML;    
 })
 
 buttonBang.addEventListener('click',function () {
-    soT2 = parseFloat(dong2.innerHTML);
-    phepToan = dong1.innerHTML.slice(-1);
-    if (phepToan == "+") {
-        ketQua = soT1 + soT2;
-        dong2.innerHTML = ketQua;
-    }
-    if (phepToan == "-") {
-        ketQua = soT1 - soT2;
-        dong2.innerHTML = ketQua;
-    }
-    if (phepToan == "x") {
-        ketQua = soT1 * soT2;
-        dong2.innerHTML = ketQua;
-    }
-    if (phepToan == "/") {
-        ketQua = soT1 / soT2;
-        dong2.innerHTML = ketQua;
-    }
-    dong1.innerHTML = "";
+    dong1.innerHTML = dong2.innerHTML;
+    dong2.innerHTML = eval(dong2.innerHTML);
+
 })

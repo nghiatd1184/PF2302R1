@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    input {width: 100px;}
+    select {width: 108px;}
+</style>
 <body>
     <form>
-        <h1>Tính điểm ĐH khối D</h1>
         <table>
             <tr>
+                <td colspan="2">
+                    <h2>Tính điểm ĐH khối D</h2>
+                </td>
+            </tr>
+            <tr>
                 <td>
-                    Toán
+                    Môn Toán:
                 </td>
                 <td>
                     <input id="diemToan" type="number">
@@ -20,7 +28,7 @@
             </tr>
             <tr>
                 <td>
-                    Văn
+                    Môn Văn:
                 </td>
                 <td>
                     <input id="diemVan" type="number">
@@ -28,7 +36,7 @@
             </tr>
             <tr>
                 <td>
-                    Anh
+                    Môn Anh:
                 </td>
                 <td>
                     <input id="diemAnh" type="number">
@@ -49,7 +57,7 @@
             </tr>
         </table><br>
         <button type="button" onclick="tinhDiem()">Tính điểm</button>
-        <h1 id="ketQua" style="color: red;"></h1>
+        <h2 id="ketQua" style="color: red;"></h2>
     </form>
 
     <script>
@@ -61,9 +69,13 @@
             let hienThi = document.getElementById("ketQua");
             let ketQua;
 
-            console.log(diemAnh, diemToan, diemVan);
-
-            if (diemAnh !== NaN && diemToan !== NaN && diemVan !== NaN) {
+            if (isNaN(diemAnh) || isNaN(diemToan) || isNaN(diemVan)) {
+                alert("Vui lòng nhập điểm");
+                window.location.reload();
+            } else if (diemAnh>10 || diemToan>10 || diemVan>10) {
+                alert("Điểm không được lớn hơn 10");
+                window.location.reload();
+            } else {
                 if (khuVuc === "kv1") {
                 ketQua = diemToan + diemAnh + diemVan + 0.75;
                 hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
@@ -76,10 +88,7 @@
                 } else if (khuVuc === "kv3") {
                 ketQua = diemToan + diemAnh + diemVan;
                 hienThi.innerHTML = `Tổng điểm ĐH khối D của bạn là:  ${ketQua}`;
-            }
-            } else {
-                alert("Vui lòng nhập điểm");
-                window.location.reload();
+                }
             }
         }
     </script>
