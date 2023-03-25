@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <h2>Tính BMI</h2>
+        <table>
+            <tr>
+                <td>
+                    Chiều cao:
+                </td>
+                <td>
+                    <input type="number" id="chieuCao" placeholder="Meter">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cân nặng:
+                </td>
+                <td>
+                    <input type="number" id="canNang" placeholder="Kilogram">
+                </td>
+            </tr>
+        </table>
+        <button type="button" onclick="tinhBMI()">Tính BMI</button>
+    </form>
+    <div>
+        <h2 id="p1" style="color: red;"></h2>
+        <h2 id="p2" style="color: red;"></h2>
+    </div>
+
+    <script>
+        function tinhBMI() {
+            let chieuCao = parseFloat(document.getElementById("chieuCao").value);
+            let canNang = parseFloat(document.getElementById("canNang").value);
+            let dong1 = document.getElementById("p1");
+            let dong2 = document.getElementById("p2");
+
+            if (isNaN(chieuCao) || isNaN(canNang) || chieuCao <= 0 || canNang<=0) {
+                alert("Dữ liệu không hợp lệ!");
+                window.location.reload();
+            } else {
+                let bmi = canNang / (chieuCao*chieuCao);
+                dong1.innerHTML = `BMI = ${bmi.toFixed(2)}`;
+                if (bmi < 16) {
+                    dong2.innerHTML = 'Kết Luận: Gầy độ III';
+                } else if (bmi <17) {
+                    dong2.innerHTML = 'Kết Luận: Gầy độ II';
+                } else if (bmi <18.5) {
+                    dong2.innerHTML = 'Kết Luận: Gầy độ I';
+                } else if (bmi <25) {
+                    dong2.innerHTML = 'Kết Luận: Bình Thường';
+                } else if (bmi <30) {
+                    dong2.innerHTML = 'Kết Luận: Thừa cân';
+                } else if (bmi <35) {
+                    dong2.innerHTML = 'Kết Luận: Béo phì độ I';
+                } else if (bmi <40) {
+                    dong2.innerHTML = 'Kết Luận: Béo phì độ II';
+                } else {
+                    dong2.innerHTML = 'Kết Luận: Béo phì độ III';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
