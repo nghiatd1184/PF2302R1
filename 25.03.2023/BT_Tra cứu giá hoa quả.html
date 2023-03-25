@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Giá hoa quả</h2>
+    <input type="text" id="ten">
+    <button type="button" onclick="traCuu()">Xem Giá</button>
+    <h3 id="ketQua" style="color: red;"></h3>
+
+    <script>
+        function traCuu() {
+            let hoaQua = document.getElementById("ten").value.toLowerCase();
+            let ketQua;
+            
+            if (hoaQua == "") {
+                alert('Vui lòng nhập loại quả cần tra cứu!');
+            } else {
+                switch (hoaQua) {
+                case 'ổi': ketQua = 'Ổi: 20000 VNĐ/kg';break;
+                case 'dưa hấu': ketQua = 'Dưa Hấu: 20000 VNĐ/kg';break;
+                case 'táo': ketQua = 'Táo: 30000 VNĐ/kg';break;
+                case 'xoài': ketQua = 'Xoài: 30000 VNĐ/kg';break;
+                case 'cam': ketQua = 'Cam: 40000 VNĐ/kg';break;
+                case 'chôm chôm': ketQua = 'Chôm Chôm: 40000 VNĐ/kg';break;
+                case 'măng cụt': ketQua = 'Măng Cụt: 50000 VNĐ/kg';break;
+                }
+                document.getElementById("ketQua").innerHTML = ketQua;
+            } 
+        }
+    </script>
+</body>
+</html>

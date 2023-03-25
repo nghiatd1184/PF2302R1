@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Tính năm âm lịch</h2>
+    Năm dương lịch:
+    <input type="number" id="namDuongLich" min="0" placeholder="Nhập năm dương lịch">
+    <button type="button" onclick="tinhNamAmLich()">Tính năm âm lịch</button>
+    <h2 id="ketQua"></h2>
+
+    <script>
+        function tinhNamAmLich() {
+            let namDuongLich = parseInt(document.getElementById("namDuongLich").value);
+            let can = ['Canh', 'Tân', 'Nhâm', 'Quý', 'Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ'];
+            let chi = ['Thân', 'Dậu', 'Tuất', 'Hợi', 'Tý', 'Sửu', 'Dần', 'Mẹo', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi'];
+
+            if (isNaN(namDuongLich)) {
+                alert('Vui lòng nhập năm dương lịch');
+            } else {
+                document.getElementById("ketQua").innerHTML = `Năm âm lịch của năm ${namDuongLich} là: ${can[namDuongLich%10]} ${chi[namDuongLich%12]}`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Tra cứu số ngày trong tháng</h2>
+    Năm : <input type="number" id="nam"><br>
+    Tháng : <input type="number" id="thang"><br>
+    <button type="button" onclick="traCuuSoNgay()">Tra Cứu</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function laNamNhuan(nam) {
+            if (nam % 400 ===0) {
+                return true;
+            } else if (nam % 4 === 0 && nam % 100 != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        function traCuuSoNgay() {
+            let nam = parseInt(document.getElementById("nam").value);
+            let thang = parseInt(document.getElementById("thang").value);
+            let ketQua = laNamNhuan(nam) ? `${nam} là năm nhuận` : `${nam} là năm thường`;
+            let soNgay = 0;
+
+            switch (thang) {
+                case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                    soNgay = 31; break;
+                case 4: case 6: case 9: case 11:
+                    soNgay = 30; break;
+                case 2:
+                    soNgay = laNamNhuan(nam) ? 29 : 28; break;
+            }
+
+            ketQua += `<br>Tháng ${thang}/${nam} có ${soNgay} ngày`
+            document.getElementById("ketQua").innerHTML = ketQua;
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table cellpadding="10" cellspacing="0">
+        <tr>
+            <td>
+                <b>Số lượng</b>
+            </td>
+            <td>
+                <b>Chuyển đồi từ tiền</b>
+            </td>
+            <td>
+                <b>Sang tiền</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="number" id="soLuong">
+            </td>
+            <td>
+                <select id="tienGoc">
+                    <option value="vnd">Việt Nam Đồng</option>
+                    <option value="usd">Đô La Mỹ</option>
+                    <option value="jpy">Yên Nhật</option>
+                    <option value="rmb">Nhân Dân Tệ</option>
+                </select>
+            </td>
+            <td>
+                <select id="tienChuyen">
+                    <option value="vnd">Việt Nam Đồng</option>
+                    <option value="usd">Đô La Mỹ</option>
+                    <option value="jpy">Yên Nhật</option>
+                    <option value="rmb">Nhân Dân Tệ</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" onclick="chuyenDoi()">Chuyển đổi</button>
+            </td>
+        </tr>
+    </table>
+    <h2 style="color: brown;" id="ketQua"></h2>
+
+    <script>
+        function chuyenDoi() {
+            let soLuong = parseFloat(document.getElementById("soLuong").value);
+            let textTienGoc = document.getElementById("tienGoc");
+            let textTienChuyen = document.getElementById("tienChuyen");
+            let tienGoc = textTienGoc.value;
+            let tienChuyen = textTienChuyen.value;
+            let ketQua;
+
+            if (isNaN(soLuong)) {
+                alert('Vui lòng nhập số lượng tiền cần chuyển');
+                window.location.reload();
+            } else {
+                switch (tienGoc) {
+                    case 'vnd':
+                        switch (tienChuyen) {
+                            case 'vnd': ketQua = soLuong; break;
+                            case 'usd': ketQua = soLuong * 0.000043; break;
+                            case 'jpy': ketQua = soLuong * 0.0056; break;
+                            case 'rmb': ketQua = soLuong * 0.00029; break;
+                        }
+                        break;
+                    case 'usd':
+                        switch (tienChuyen) {
+                            case 'usd': ketQua = soLuong; break;
+                            case 'vnd': ketQua = soLuong * 23525; break;
+                            case 'jpy': ketQua = soLuong * 130.75; break;
+                            case 'rmb': ketQua = soLuong * 6.87; break;
+                        }
+                        break;
+                    case 'jpy':
+                        switch (tienChuyen) {
+                            case 'jpy': ketQua = soLuong; break;
+                            case 'vnd': ketQua = soLuong * 179.92; break;
+                            case 'usd': ketQua = soLuong * 0.0076; break;
+                            case 'rmb': ketQua = soLuong * 0.053; break;
+                        }
+                        break;
+                    case 'rmb':
+                        switch (tienChuyen) {
+                            case 'rmd': ketQua = soLuong; break;
+                            case 'vnd': ketQua = soLuong * 3425.31; break;
+                            case 'usd': ketQua = soLuong * 0.15; break;
+                            case 'jpy': ketQua = soLuong * 19.04; break;
+                        }
+                        break;
+                }
+                document.getElementById("ketQua").innerHTML = `${soLuong} ${textTienChuyen.options[textTienChuyen.selectedIndex].innerHTML} = ${ketQua.toFixed(6)} ${textTienGoc.options[textTienGoc.selectedIndex].innerHTML}`;
+            }
+        }
+    </script>
+</body>
+</html>
