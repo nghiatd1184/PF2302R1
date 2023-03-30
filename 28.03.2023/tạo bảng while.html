@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TẠO BẢNG</title>
+</head>
+<body>
+    <form>
+        <fieldset style="width: 0px;">
+            <legend><b>BÀI TẬP TẠO BẢNG</b></legend>
+            Nhập số dòng:
+            <input type="number" id="nhapdong" placeholder="Số lớn hơn 1"><br><br>
+            Nhập số cột:
+            <input type="number" id="nhapcot" placeholder="Số lớn hơn 1"><br><br>
+            <button type="button" onclick="taoBang()">Tạo bảng</button>
+        </fieldset>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+    <script>
+        function taoBang() {
+            let soDong = parseInt(document.getElementById("nhapdong").value);
+            let soCot = parseInt(document.getElementById("nhapcot").value);     
+            let khoi = document.getElementById("ketQua");
+            let bang = document.createElement("table");
+            bang.cellPadding = "5";
+            bang.cellSpacing = "0";
+            bang.border = "1";
+
+            if (isNaN(soCot) || isNaN(soDong)) {
+                alert("Vui lòng nhập dữ liệu!");
+            } else if (soDong<1 || soCot <1) {
+                alert("Số cột số dòng lớn hơn 1!");
+            } else {
+                for (let i = 1; i <= soDong; i++) {
+                    let taoDong = document.createElement("tr");
+                    for (let e = 1; e <= soCot; e++) {
+                        let taoCot = document.createElement("td");
+                        taoCot.innerHTML = `Dòng ${i} ô ${e}`;
+                        taoDong.appendChild(taoCot);
+                    }
+                    bang.appendChild(taoDong);                    
+                }
+                khoi.appendChild(bang);
+            }
+        }
+    </script>
+</body>
+</html>

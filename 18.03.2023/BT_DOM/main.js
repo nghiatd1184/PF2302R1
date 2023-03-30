@@ -8,10 +8,6 @@ let button6 = document.getElementById("sau");
 let button7 = document.getElementById("bay");
 let button8 = document.getElementById("tam");
 let button9 = document.getElementById("chin");
-let buttonCham = document.getElementById("cham");
-let buttonMoNgoac = document.getElementById("moNgoac");
-let buttonDongNgoac = document.getElementById("dongNgoac");
-let buttonPhanTram = document.getElementById("phantram");
 let buttonCong = document.getElementById("cong");
 let buttonTru = document.getElementById("tru");
 let buttonNhan = document.getElementById("nhan");
@@ -21,6 +17,7 @@ let buttonBang = document.getElementById("bang");
 let dong1 = document.getElementById("p1");
 let dong2 = document.getElementById("p2");
 let phepToan;
+let soT1, soT2;
 let ketQua = 0;
 
 button0.addEventListener('click',function () {
@@ -53,33 +50,61 @@ button8.addEventListener('click',function () {
 button9.addEventListener('click',function () {
     dong2.innerHTML = dong2.innerHTML + button9.innerHTML;    
 })
-buttonCham.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonCham.innerHTML;    
-})
-buttonMoNgoac.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonMoNgoac.innerHTML;    
-})
-buttonDongNgoac.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonDongNgoac.innerHTML;    
-})
-buttonPhanTram.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonPhanTram.innerHTML;    
-})
+
+
 buttonNhan.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonNhan.innerHTML;    
+    phepToan = "x";
+    if (dong2.innerHTML === '') {
+        soT1 = 0;
+        dong1.innerHTML = `0 x`;
+    } else {
+        soT1 = parseInt(dong2.innerHTML);
+        dong1.innerHTML = dong2.innerHTML + " x";
+        dong2.innerHTML = "";
+    }
 })
 buttonChia.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonChia.innerHTML;    
+    phepToan = "/";
+    if (dong2.innerHTML === '') {
+        soT1 = 0;
+        dong1.innerHTML = `0 /`;
+    } else {
+        soT1 = parseInt(dong2.innerHTML);
+        dong1.innerHTML = dong2.innerHTML + " /";
+        dong2.innerHTML = "";
+    }   
 })
 buttonCong.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonCong.innerHTML;    
+    phepToan = "+";
+    if (dong2.innerHTML === '') {
+        soT1 = 0;
+        dong1.innerHTML = `0 +`;
+    } else {
+        soT1 = parseInt(dong2.innerHTML);
+        dong1.innerHTML = dong2.innerHTML + " +";
+        dong2.innerHTML = "";
+    }   
 })
 buttonTru.addEventListener('click',function () {
-    dong2.innerHTML = dong2.innerHTML + buttonTru.innerHTML;    
+    phepToan = "-";
+    if (dong2.innerHTML === '') {
+        soT1 = 0;
+        dong1.innerHTML = `0 -`;
+    } else {
+        soT1 = parseInt(dong2.innerHTML);
+        dong1.innerHTML = dong2.innerHTML + " -";
+        dong2.innerHTML = "";
+    }       
 })
 
 buttonBang.addEventListener('click',function () {
-    dong1.innerHTML = dong2.innerHTML;
-    dong2.innerHTML = eval(dong2.innerHTML);
+    soT2 = parseInt(dong2.innerHTML);
+    dong1.innerHTML = `${dong1.innerHTML} ${dong2.innerHTML}`;
+    switch (phepToan) {
+        case "x": dong2.innerHTML = soT1 * soT2; break;
+        case "/": dong2.innerHTML = soT1 / soT2; break;
+        case "+": dong2.innerHTML = soT1 + soT2; break;
+        case "-": dong2.innerHTML = soT1 - soT2; break;
+    }
 
 })
