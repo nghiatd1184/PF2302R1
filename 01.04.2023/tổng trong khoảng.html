@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nhập số đầu:
+    <input type="number" id="soDau"><br>
+    Nhập số cuối:
+    <input type="number" id="soCuoi"><br>
+    <button type="button" onclick="tinhTong()">Tính tổng</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function tinhTong() {
+            let a = parseInt(document.getElementById("soDau").value);
+            let b = parseInt(document.getElementById("soCuoi").value);
+            let tong = 0;
+
+            for (let i = a + 1; i < b; i++) {
+                console.log(i);
+                tong += i;
+            }
+            document.getElementById("ketQua").innerHTML = `Tổng = ${tong}`;
+        }
+        
+    </script>
+</body>
+</html>

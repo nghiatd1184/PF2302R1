@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TẠO BẢNG</title>
+</head>
+<body>
+    <form>
+        <fieldset style="width: 0px;">
+            <legend><b>BÀI TẬP TẠO BẢNG CỬU CHƯƠNG</b></legend>
+            Nhập bảng cửu chương:
+            <input type="number" id="cuuChuong" placeholder="Số lớn hơn 1"><br><br>
+            <button type="button" onclick="taoBang()">Tạo bảng</button>
+        </fieldset>
+    </form>
+    <br>
+    <div id="ketQua"></div>
+    <script>
+        function taoBang() {
+            let cuuChuong = parseInt(document.getElementById("cuuChuong").value);    
+            let khoi = document.getElementById("ketQua");
+            let bang = document.createElement("table");
+            bang.cellPadding = "5";
+            bang.cellSpacing = "0";
+            bang.border = "1";
+
+            if (isNaN(cuuChuong)) {
+                alert("Vui lòng nhập dữ liệu!");
+            } else if (cuuChuong<2) {
+                alert("Nhập dữ liệu lớn hơn 1!");
+            } else {
+                for (let i = 1; i < 11; i++) {
+                    let taoDong = document.createElement("tr");
+                    for (let e = 2; e <=cuuChuong; e++) {
+                        let taoCot = document.createElement("td");
+                        taoCot.innerHTML = `${e} x ${i} = ${i*e}`;
+                        taoDong.appendChild(taoCot);
+                    }
+                    bang.appendChild(taoDong);                    
+                }
+                khoi.appendChild(bang);
+            }
+        }
+    </script>
+</body>
+</html>
