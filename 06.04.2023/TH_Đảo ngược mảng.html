@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nhập số phần tử:
+    <input type="number" id="soPhanTu"><br>
+    <button type="button" onclick="daoKetQua()">Đảo Phần Tử</button>
+    <div>
+        <p id="p1"></p>
+        <p id="p2"></p>
+    </div>
+
+    <script>
+        function daoKetQua() {
+            let soPhanTu = parseInt(document.getElementById("soPhanTu").value);
+            let mang = [];
+            for (let index = 0; index < soPhanTu; index++) {
+                mang[index] = Math.floor(Math.random() * 101);
+            }
+            document.getElementById("p1").innerHTML = `Mảng khởi tạo: ${mang.join(", ")}`;
+            let last = mang.length - 1;
+            for (let i = 0; i < mang.length / 2; i++) {
+                let swap = mang[i];
+                mang[i] = mang[last];
+                mang[last] = swap;
+                last -= 1;
+            }
+            document.getElementById("p2").innerHTML = `Mảng đảo ngược: ${mang.join(", ")}`; 
+        }
+        
+    </script>
+</body>
+</html>

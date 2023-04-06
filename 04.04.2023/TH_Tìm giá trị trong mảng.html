@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Mảng có bao nhiêu phần từ: 
+    <input type="number" id="soLuong"> <br>
+    Số cần tìm: 
+    <input type="number" id="giaTriTim"><br>
+    <button type="button" onclick="xuLy()">Kết Quả</button><br>
+    Mảng bao gồm: <br>
+    <div id="hienThiMang"></div><br>
+    Kết quả: <br>
+    <div>
+        <p id="p1"></p>
+        <p id="p2"></p>
+        <p id="p3"></p>
+    </div><br>
+
+    <script>
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function xuLy() {
+            let n = parseInt(document.getElementById("soLuong").value);
+            let giaTriTim = parseInt(document.getElementById("giaTriTim").value);
+            let mang = [];
+
+            for (let i = 0; i < n; i++) {
+                mang.push(getRandomArbitrary(0, 55));
+            }
+
+            document.getElementById("hienThiMang").innerHTML = mang;
+
+            let viTri = [];
+            for (let e = 0; e < n; e++) {
+                if (giaTriTim === mang[e]) {
+                    viTri.push(e);
+                };
+            }
+
+            if (viTri[0] > 0) {
+                document.getElementById("p1").innerHTML = `Giá trị ${giaTriTim} được tìm thấy tại vị trí ${viTri.join()}`;
+            } else {
+                document.getElementById("p1").innerHTML = `Không tìm thấy ${giaTriTim} trong mảng`;
+            }
+
+            let min = mang[0];
+            let max = mang[0];
+            for (let i = 1; i < mang.length; i++) {
+                if (min > mang[i]) {
+                    min = mang[i];
+                }
+                if (max < mang[i]) {
+                    max = mang[i];
+                }
+            }
+            document.getElementById("p2").innerHTML = `Số lớn nhất trong mảng là ${max}, số nhỏ nhất trong mảng là ${min}`;
+        }
+
+
+    </script>
+</body>
+</html>

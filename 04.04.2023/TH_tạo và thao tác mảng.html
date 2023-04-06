@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="phanTu">
+    <button type="button" onclick="themPhanTu()">Thêm</button>
+    <button type="button" onclick="hienThi()">Hiển thị</button>
+    <hr>
+    <div id="hienThi"></div>
+
+    <script>
+        let mang = [];
+        
+        function themPhanTu() {
+            let phanTu = document.getElementById("phanTu");
+            if (phanTu.value === '') {
+                alert("Vui lòng nhập giá trị!")
+            } else {
+                mang.push(phanTu.value);
+                phanTu.value = '';
+                phanTu.focus(); // đưa dấu nháy nháy vào ô nhập
+                alert(`Phần tử: ${mang[mang.length - 1]} được thêm vào vị trí thứ ${mang.length -1} `);
+            }
+        }
+
+        function hienThi() {
+            let chuoi ='';
+            for (let i in mang) {
+                chuoi += `Phần Tử thứ ${i}: ${mang[i]} <br>`;
+            }
+            document.getElementById("hienThi").innerHTML = chuoi;
+        }
+    </script>
+</body>
+</html>
