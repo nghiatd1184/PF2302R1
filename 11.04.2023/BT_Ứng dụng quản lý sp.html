@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Thêm Sản Phẩm</h2>
+    <div>
+        <input type="text" placeholder="Sản phẩm mới" id="sanPhamMoi">
+        <button type="button" onclick="themSanPham()">Thêm</button>
+    </div>
+    <h2>Danh Sách Sản Phẩm</h2>
+    <button type="button" onclick="hienThiSanPham()">Hiển Thị</button><br>
+    <table border = "1" cellpadding = "5" cellspacing ="0" id="bang">
+        <tr>
+            <td>
+                STT
+            </td>
+            <td>
+                Tên Sản Phẩm
+            </td>
+            <td>
+                Sửa
+            </td>
+            <td>
+                Xóa
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        let tenSanPham = [];
+        let bang = document.getElementById('bang');
+
+
+
+        function suaSanPham(params) {
+            
+        }
+
+        function themSanPham() {
+            let sanPhamMoi = document.getElementById("sanPhamMoi");
+            tenSanPham.push(sanPhamMoi.value);
+            sanPhamMoi.value = '';
+            sanPhamMoi.focus();
+            console.log(tenSanPham);
+        }
+
+        function hienThiSanPham() {
+            for (let i = 0; i < tenSanPham.length; i++) {
+                let taoDong = document.createElement('tr');
+                taoDong.id = `dong${i}`
+
+                let buttonXoa = document.createElement('button');
+                buttonXoa.type = 'button';
+                buttonXoa.onclick = 'xoaSanPham()';
+                buttonXoa.innerHTML = 'Xóa'
+
+                let buttonSua = document.createElement('button');
+                buttonSua.type = 'button';
+                buttonSua.onclick = 'suaSanPham()';
+                buttonSua.innerHTML = 'Sửa'
+
+                let cot1 = document.createElement('td');
+                cot1.innerHTML = i + 1;
+                let cot2 = document.createElement('td')
+                cot2.innerHTML = tenSanPham[i];
+                let cot3 = document.createElement('td')
+                cot3.appendChild(buttonSua);
+                let cot4 = document.createElement('td')
+                cot4.appendChild(buttonXoa);
+                taoDong.appendChild(cot1);
+                taoDong.appendChild(cot2);
+                taoDong.appendChild(cot3);
+                taoDong.appendChild(cot4);
+                bang.appendChild(taoDong);
+                
+            }
+        }
+    </script>
+</body>
+</html>

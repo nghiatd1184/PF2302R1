@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nhập chuỗi cần kiểm tra: <br>
+    <input type="text" id="chuoi"><br>
+    <button type="button" onclick="xuLy()">Kiểm Tra</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function isPalindrome(s) {;
+            let cuoiCung = s.length - 1;
+            for (let i = 0; i < s.length / 2; i++) {
+                if (s[i] !== s[cuoiCung]) {
+                    return false;
+                }
+                cuoiCung--;
+            }
+            return true;
+        }
+
+        function xuLy() {
+            let chuoi = document.getElementById('chuoi').value;
+            if (isPalindrome(chuoi)) {
+                document.getElementById('ketQua').innerHTML = `Chuỗi ${chuoi} đối xứng nhau`;
+            } else {
+                document.getElementById('ketQua').innerHTML = `Chuỗi ${chuoi} không đối xứng nhau`;
+            }
+        }
+    </script>
+</body>
+</html>
