@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Số Thứ 1: <input type="number" id="soT1"> <br>
+    Số Thứ 2: <input type="number" id="soT2"> <br>
+    <button type="button" onclick="hienThiKetQua()">Kiểm Tra</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function xuLy(a, b) {
+            if (a > b) {
+                alert(`${a} > ${b}`);
+                return;
+            } else {
+                return a+b;
+            }
+        }
+
+        function hienThiKetQua() {
+            let a = parseInt(document.getElementById("soT1").value);
+            let b = parseInt(document.getElementById("soT2").value);
+            document.getElementById("ketQua").innerHTML = xuLy(a, b);
+        }
+    </script>
+</body>
+</html>

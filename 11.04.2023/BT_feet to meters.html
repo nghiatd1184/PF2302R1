@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Meters: <input type="number" id="meters"> <br>
+    Feet: <input type="number" id="feet"> <br>
+    <button type="button" onclick="caculate()">Caculate</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function feetToMeters(feet) {
+            return 0.305 * feet;
+        }
+
+        function metersToFeet(meters) {
+            return 3.279 * meters;
+        }
+
+        function caculate() {
+            let meters = parseFloat(document.getElementById("meters").value);
+            let feet = parseFloat(document.getElementById("feet").value);
+            document.getElementById("ketQua").innerHTML = `${feet} feet = ${feetToMeters(feet)} meters<br>${meters} meters = ${metersToFeet(meters)} feet`;
+        }
+    </script>
+</body>
+</html>
