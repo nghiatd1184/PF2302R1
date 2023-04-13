@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nhập số lượng số nguyên tố cần in <br>
+    <input type="number" id="soLuong"> <br>
+    <button type="button" onclick="inSoNguyenTo()">In</button>
+    <div id="ketQua"></div>
+
+    <script>
+        function inSoNguyenTo() {
+            let soLuong = parseInt(document.getElementById("soLuong").value);
+            let count = 0;
+            let n = 2;
+            let chuoi = '';
+            while (count<soLuong) {
+                let check = true;
+                for (let i = 2; i < n; i++) {
+                    if (n % i === 0) {
+                        check = false;
+                        break;
+                    };
+                }
+                if (check === true) {
+                        chuoi += `${n}, `;
+                        count++;
+                    }
+                n++;
+            }
+            document.getElementById('ketQua').innerHTML = chuoi;
+        } 
+    </script>
+</body>
+</html>
