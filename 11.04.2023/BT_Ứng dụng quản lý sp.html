@@ -21,6 +21,7 @@
         height: fit-content;
         width: fit-content;
         padding: 10px;
+        border-radius: 8px;
     }
     input{
         border-radius: 8px;
@@ -43,9 +44,8 @@
         <button type="button" onclick="themSanPham()">Thêm</button>
     </div>
     <h2>Danh Sách Sản Phẩm</h2>
-    <button type="button" onclick="hienThiSanPham()">Hiển Thị</button>
     <button type="button" onclick="document.getElementById('formSuaSP').style.display = 'block'">Sửa</button>
-    <button type="button" onclick="document.getElementById('formXoaSP').style.display = 'block'">Xóa</button><br><br>
+    <button type="button" onclick="document.getElementById('formXoaSP').style.display = 'block'">Xóa</button><br>
 
     <div id="formSuaSP" style="display: none;">
         <table>
@@ -84,12 +84,12 @@
         </table>
         <button type="button" onclick="suaSanPham()">Xác Nhận</button>
     </div>
-
+    <br>
     <div id="formXoaSP" style="display: none;">
         Tên sản phẩm cần xóa: <input type="text" id="tenSanPhamXoa"><br>
-        <button type="button" onclick="xoaSanPham()">Xác Nhận</button><br><br>
+        <button type="button" onclick="xoaSanPham()">Xác Nhận</button>
     </div>
-
+    <br>
     <div id="hienThiSP" style="display: none;"></div>
 
     <script>
@@ -98,6 +98,7 @@
             ['Tên Sản Phẩm', 'Giá($)', 'Số Lượng']
         ]
         let formSua = document.getElementById('formSuaSP');
+        let formXoa = document.getElementById('formXoaSP');
         let bangHienThi = document.getElementById('hienThiSP');
 
         // tạo hàm xóa sản phẩm ===============================================================
@@ -115,12 +116,12 @@
                 if (viTri === -1) {
                     alert('Vui lòng nhập chính xác tên sản phẩm cần sửa');
                 } else {
-                    sanPham[viTri] ='';
+                    sanPham.splice(viTri, 1)
                     sanPhamXoa.value ='';
                     bangHienThi.innerHTML = '';
-                    formSua.style.display = 'none';
+                    formXoa.style.display = 'none';
                     alert('Xóa thành công!')
-                    bangHienThi.style.display = 'none';
+                    hienThiSanPham()
                 }
             }
         }
@@ -153,7 +154,7 @@
                     soLuongSanPhamMoi.value = '';
                     formSua.style.display = 'none';
                     alert('Sửa thành công!')
-                    bangHienThi.style.display = 'none';
+                    hienThiSanPham()
                 }
             }
         }
@@ -181,7 +182,7 @@
                     soLuongSanPhamMoi.value= '';
                     tenSanPhamMoi.focus();
                     alert('Thêm mới thành công!')
-                    bangHienThi.style.display = 'none';
+                    hienThiSanPham()
                 }
             }
         }
@@ -189,11 +190,11 @@
         //Tạo hàm hiển thị sản phẩm trong danh sách
         function hienThiSanPham() {
             bangHienThi.innerHTML = '';
-            let soLuong = document.createElement('p');
-            soLuong.style.color = 'firebrick';
-            soLuong.style.fontWeight = 'bold';
-            soLuong.innerHTML = `Tổng số lượng sản phẩm: ${sanPham.length - 1}`;
-            bangHienThi.appendChild(soLuong);
+            let tongSoLuong = document.createElement('p');
+            tongSoLuong.style.color = 'firebrick';
+            tongSoLuong.style.fontWeight = 'bold';
+            tongSoLuong.innerHTML = `Tổng số lượng sản phẩm: ${sanPham.length - 1}`;
+            bangHienThi.appendChild(tongSoLuong);
             let bang = document.createElement('table');
             bang.border = "0";
             bang.cellpadding = "5";

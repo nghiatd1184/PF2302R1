@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function taoMangRandom(x) {
+            let mang =[];
+
+            for (let i = 0; i < x; i++) {
+                mang.push(Math.floor(Math.random() * 101));
+            }
+            return mang;
+        }
+
+        function daoNguocMang(y) {
+            let cuoiCung = y.length - 1;
+            for (let i = 0; i < (y.length / 2); i++) {
+                let tam = y[i];
+                y[i] = y[cuoiCung];
+                y[cuoiCung] = tam;
+                cuoiCung--;
+            }
+            return y;
+        }
+
+        let x = parseInt(prompt('Nhập số lượng ký tự của mảng:'));
+
+        let mang = taoMangRandom(x);
+
+        alert(`Mảng ban đầu là ${mang.join(", ")}. Mảng đảo ngược là ${daoNguocMang(mang).join(", ")}`);
+    </script>
+</body>
+</html>

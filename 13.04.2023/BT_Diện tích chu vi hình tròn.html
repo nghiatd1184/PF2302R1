@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function dienTich(banKinh) {
+            return Math.PI * banKinh * banKinh;
+        }
+        function chuVi(banKinh) {
+            return Math.PI * banKinh * 2;
+        }
+
+        let banKinh = parseFloat(prompt('nhập bán kính'));
+
+        alert(`Chu vi hình tròn = ${Math.floor(chuVi(banKinh))}. Diện tích hình tròn = ${Math.floor(dienTich(banKinh))}`);
+    </script>
+</body>
+</html>
