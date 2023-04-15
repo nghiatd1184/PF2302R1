@@ -44,52 +44,6 @@
         <button type="button" onclick="themSanPham()">Thêm</button>
     </div>
     <h2>Danh Sách Sản Phẩm</h2>
-    <button type="button" onclick="document.getElementById('formSuaSP').style.display = 'block'">Sửa</button>
-    <button type="button" onclick="document.getElementById('formXoaSP').style.display = 'block'">Xóa</button><br>
-
-    <div id="formSuaSP" style="display: none;">
-        <table>
-            <tr>
-                <td>
-                    Tên Sản Phẩm Cần Sửa:
-                </td>
-                <td>
-                    <input type="text" id="suaTenSPCu">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Tên Mới:
-                </td>
-                <td>
-                    <input type="text" id="suaTenSPMoi">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Giá Mới:
-                </td>
-                <td>
-                    <input type="number" id="suaGiaSPMoi">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Số Lượng Mới:
-                </td>
-                <td>
-                    <input type="number" id="suaSoLuongSPMoi">
-                </td>
-            </tr>
-        </table>
-        <button type="button" onclick="suaSanPham()">Xác Nhận</button>
-    </div>
-    <br>
-    <div id="formXoaSP" style="display: none;">
-        Tên sản phẩm cần xóa: <input type="text" id="tenSanPhamXoa"><br>
-        <button type="button" onclick="xoaSanPham()">Xác Nhận</button>
-    </div>
-    <br>
     <div id="hienThiSP" style="display: none;"></div>
 
     <script>
@@ -100,64 +54,7 @@
         let formSua = document.getElementById('formSuaSP');
         let formXoa = document.getElementById('formXoaSP');
         let bangHienThi = document.getElementById('hienThiSP');
-
-        // tạo hàm xóa sản phẩm ===============================================================
-        function xoaSanPham(params) {
-            let sanPhamXoa = document.getElementById('tenSanPhamXoa');
-            if (sanPhamXoa.value === '') {
-                alert('Vui lòng nhập tên sản phẩm cần xóa');
-            } else {
-                let viTri = -1
-                for (let i = 0; i < sanPham.length; i++) {
-                    if (sanPhamXoa.value === sanPham[i][0]) {
-                        viTri = i;
-                    }
-                }
-                if (viTri === -1) {
-                    alert('Vui lòng nhập chính xác tên sản phẩm cần sửa');
-                } else {
-                    sanPham.splice(viTri, 1)
-                    sanPhamXoa.value ='';
-                    bangHienThi.innerHTML = '';
-                    formXoa.style.display = 'none';
-                    alert('Xóa thành công!')
-                    hienThiSanPham()
-                }
-            }
-        }
-
-        //Tạo hàm sửa sản phẩm
-        function suaSanPham(params) {
-            let tenSanPhamSua = document.getElementById('suaTenSPCu');
-            let tenSanPhamMoi = document.getElementById('suaTenSPMoi');
-            let giaSanPhamMoi = document.getElementById('suaGiaSPMoi');
-            let soLuongSanPhamMoi = document.getElementById('suaSoLuongSPMoi');
-            if (tenSanPhamSua.value === '' || tenSanPhamMoi.value === '' || giaSanPhamMoi.value === '' || soLuongSanPhamMoi.value === '') {
-                alert('Vui lòng nhập đầy đủ thông tin sản phẩm')
-            } else {
-                let viTri = -1
-                for (let i = 0; i < sanPham.length; i++) {
-                    if (tenSanPhamSua.value === sanPham[i][0]) {
-                        viTri = i;
-                    }
-                }
-                if (viTri === -1) {
-                    alert('Vui lòng nhập chính xác tên sản phẩm cần sửa');
-                } else {
-                    sanPham[viTri][0] = tenSanPhamMoi.value;
-                    sanPham[viTri][1] = giaSanPhamMoi.value;
-                    sanPham[viTri][2] = soLuongSanPhamMoi.value;
-                    bangHienThi.innerHTML = '';
-                    tenSanPhamSua.value ='';
-                    tenSanPhamMoi.value = '';
-                    giaSanPhamMoi.value = '';
-                    soLuongSanPhamMoi.value = '';
-                    formSua.style.display = 'none';
-                    alert('Sửa thành công!')
-                    hienThiSanPham()
-                }
-            }
-        }
+        hienThiSanPham();
 
         // Tạo hàm thêm sản phẩm mới
         function themSanPham() {
@@ -167,7 +64,7 @@
             if (tenSanPhamMoi === '' || giaSanPhamMoi === '' || soLuongSanPhamMoi === '') {
                 alert('Vui lòng nhập đầy đủ thông tin sản phẩm mới');
             } else {
-                let viTri = -1
+                let viTri = -1;
                 for (let i = 0; i < sanPham.length; i++) {
                     if (tenSanPhamMoi.value === sanPham[i][0]) {
                         viTri = i;
@@ -176,13 +73,14 @@
                 if (viTri !== -1) {
                     alert('Sản phẩm đã có sẵn');
                 } else {
-                    sanPham.push(new Array(tenSanPhamMoi.value, giaSanPhamMoi.value, soLuongSanPhamMoi.value))
+                    sanPham.push(new Array(tenSanPhamMoi.value, giaSanPhamMoi.value, soLuongSanPhamMoi.value));
+                    console.log(sanPham);
                     tenSanPhamMoi.value = '';
                     giaSanPhamMoi.value= '';
                     soLuongSanPhamMoi.value= '';
                     tenSanPhamMoi.focus();
-                    alert('Thêm mới thành công!')
-                    hienThiSanPham()
+                    alert('Thêm mới thành công!');
+                    hienThiSanPham();
                 }
             }
         }
@@ -201,7 +99,7 @@
             bang.cellspacing = "0";
             bang.style.backgroundColor = 'white';
             for (let i = 0; i < sanPham.length; i++) {
-                let taoDong = document.createElement('tr')
+                let taoDong = document.createElement('tr');
                 for (let e = 0; e < 3; e++) {
                     let taoCot = document.createElement('td');
                     taoCot.innerHTML = sanPham[i][e];
@@ -213,10 +111,53 @@
                     }
                     taoDong.appendChild(taoCot);
                 }
+                if (i > 0) {
+                    //Tạo nút xóa
+                    let taoCotXoa = document.createElement('td');
+                    let taoNutXoa = document.createElement('button');
+                    taoNutXoa.id = i;
+                    taoNutXoa.innerHTML = 'Xóa';
+                    taoNutXoa.onclick = function xoaTest() {
+                        sanPham.splice(parseInt(taoNutXoa.id),1);
+                        alert('Xóa thành công!');
+                        hienThiSanPham();
+                    }
+                    taoCotXoa.appendChild(taoNutXoa);
+                    taoDong.appendChild(taoCotXoa);
+                    //Tạo nút sửa
+                    let taoCotSua = document.createElement('td');
+                    let taoNutSua = document.createElement('button');
+                    taoNutSua.id = i;
+                    taoNutSua.innerHTML = 'Sửa';
+                    taoNutSua.onclick = function suaTest() {
+                        let tenSanPhamSua = prompt('Nhập tên sản phẩm mới');
+                        let giaSanPhamSua = prompt('Nhập giá sản phẩm mới');
+                        let soLuongSanPhamSua = prompt('Nhập số lượng sản phẩm mới');
+                        if (tenSanPhamSua === '' || giaSanPhamSua === '' || soLuongSanPhamSua === '') {
+                            alert('Vui lòng nhập đầy đủ thông tin');
+                        } else {
+                            sanPham[parseInt(taoNutSua.id)][0] = tenSanPhamSua;
+                            sanPham[parseInt(taoNutSua.id)][1] = giaSanPhamSua;
+                            sanPham[parseInt(taoNutSua.id)][2] = soLuongSanPhamSua;
+                            alert('Sửa thành công!');
+                            hienThiSanPham();
+                        }
+                    }
+                    taoCotSua.appendChild(taoNutSua);
+                    taoDong.appendChild(taoCotSua);
+                }
                 bang.appendChild(taoDong);
             }
             bangHienThi.appendChild(bang);
             bangHienThi.style.display = 'block';
+        }
+
+        //Hàm tạo uuid
+        function uuid() {
+            var temp_url = URL.createObjectURL(new Blob());
+            var uuid = temp_url.toString();
+            URL.revokeObjectURL(temp_url);
+            return uuid.substr(uuid.lastIndexOf('/') + 1);
         }
     </script>
 </body>
