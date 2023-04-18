@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid blue;"></canvas>
+
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        //vẽ trên mặt phẳng 0xy
+        let ctx = canvas.getContext('2d');
+
+        //vẽ hình chữ nhật
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, 150, 100);
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'purple';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(155, 5, 150, 100);
+
+        //vẽ chữ
+        ctx.beginPath();
+        ctx.font = '60px Arial';
+        ctx.fillStyle = 'Orange';
+        ctx.fillText('Top 1 là dễ', 310, 60);
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 2;
+        ctx.strokeText('Không làm mà...', 310, 120);
+
+
+    </script>
+</body>
+</html>

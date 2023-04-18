@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    button{
+        border-radius: 8px;
+        background-color: #20cf6f;
+        border: 0px;
+        height: fit-content;
+        width: fit-content;
+        padding: 10px;
+        font-weight: bold;
+    }
+    div{
+        background-color: rgb(209, 209, 209);
+        height: fit-content;
+        width: fit-content;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    input{
+        border-radius: 8px;
+        border: 0px;
+        height: fit-content;
+        padding: 3px;
+        background-color: #ffffff;
+    }
+
+    td{
+        padding-inline-end: 50px;
+    }
+</style>
+<body>
+    <h2>Thêm Sản Phẩm</h2>
+    <div>
+        <input type="text" placeholder="Tên sản phẩm mới" id="tenSanPhamMoi"><br><br>
+        <input type="number" placeholder="Giá sản phẩm mới" id="giaSanPhamMoi"><br><br>
+        <input type="number" placeholder="Số lượng sản phẩm mới" id="soLuongSanPhamMoi"><br><br>
+        <button type="button" onclick="themSanPham()">Thêm</button>
+    </div>
+    <h2>Danh Sách Sản Phẩm</h2>
+    <div id="hienThiSP" style="display: none;"></div>
+
+    <script>
+        // Khai báo biến ======================================================================
+        let sanPham = [
+            ['Tên Sản Phẩm', 'Giá($)', 'Số Lượng']
+        ];
+        let sanPhamTestArray =[];
+        let formSua = document.getElementById('formSuaSP');
+        let formXoa = document.getElementById('formXoaSP');
+        let bangHienThi = document.getElementById('hienThiSP');
+        hienThiSanPham();
+
+        // Tạo hàm thêm sản phẩm mới
+        function themSanPham() {
+            let sanPhamTest = {
+                ten : document.getElementById('tenSanPhamMoi').value,
+                gia : document.getElementById("giaSanPhamMoi").value,
+                soLuong : document.getElementById("soLuongSanPhamMoi").value,
+            };
+            sanPhamTestArray.push(sanPhamTest);
+            console.log(sanPhamTestArray);
+            console.log(sanPhamTestArray[0].gia);
+            let json = JSON.stringify(sanPhamTestArray);
+            console.log(json);
+            
+            
+
+
+
+            let tenSanPhamMoi = document.getElementById("tenSanPhamMoi");
+            let giaSanPhamMoi = document.getElementById("giaSanPhamMoi");
+            let soLuongSanPhamMoi = document.getElementById("soLuongSanPhamMoi");
+            if (tenSanPhamMoi === '' || giaSanPhamMoi === '' || soLuongSanPhamMoi === '') {
+                alert('Vui lòng nhập đầy đủ thông tin sản phẩm mới');
+            } else {
+                let viTri = -1;
+                for (let i = 0; i < sanPham.length; i++) {
+                    if (tenSanPhamMoi.value === sanPham[i][0]) {
+                        viTri = i;
+                    }
+                }
+                if (viTri !== -1) {
+                    alert('Sản phẩm đã có sẵn');
+                } else {
+                    sanPham.push(new Array(tenSanPhamMoi.value, giaSanPhamMoi.value, soLuongSanPhamMoi.value));
+                    console.log(sanPham);
+                    tenSanPhamMoi.value = '';
+                    giaSanPhamMoi.value= '';
+                    soLuongSanPhamMoi.value= '';
+                    tenSanPhamMoi.focus();
+                    alert('Thêm mới thành công!');
+                    hienThiSanPham();
+                }
+            }
+        }
+
+        //Tạo hàm hiển thị sản phẩm trong danh sách
+        function hienThiSanPham() {
+            bangHienThi.innerHTML = '';
+            let tongSoLuong = document.createElement('p');
+            tongSoLuong.style.color = 'firebrick';
+            tongSoLuong.style.fontWeight = 'bold';
+            tongSoLuong.innerHTML = `Tổng số lượng sản phẩm: ${sanPham.length - 1}`;
+            bangHienThi.appendChild(tongSoLuong);
+            let bang = document.createElement('table');
+            bang.border = "0";
+            bang.cellpadding = "5";
+            bang.cellspacing = "0";
+            bang.style.backgroundColor = 'white';
+            for (let i = 0; i < sanPham.length; i++) {
+                let taoDong = document.createElement('tr');
+                for (let e = 0; e < 3; e++) {
+                    let taoCot = document.createElement('td');
+                    taoCot.innerHTML = sanPham[i][e];
+                    if (i % 2 === 0) {
+                        taoCot.style.backgroundColor = '#20cf6f';
+                    }
+                    if (i === 0) {
+                        taoCot.style.fontWeight = 'bold';
+                    }
+                    taoDong.appendChild(taoCot);
+                }
+                if (i > 0) {
+                    //Tạo nút xóa
+                    let taoCotXoa = document.createElement('td');
+                    let taoNutXoa = document.createElement('button');
+                    taoNutXoa.id = i;
+                    taoNutXoa.innerHTML = 'Xóa';
+                    taoNutXoa.onclick = function xoaTest() {
+                        sanPham.splice(parseInt(taoNutXoa.id),1);
+                        alert('Xóa thành công!');
+                        hienThiSanPham();
+                    }
+                    taoCotXoa.appendChild(taoNutXoa);
+                    taoDong.appendChild(taoCotXoa);
+                    //Tạo nút sửa
+                    let taoCotSua = document.createElement('td');
+                    let taoNutSua = document.createElement('button');
+                    taoNutSua.id = i;
+                    taoNutSua.innerHTML = 'Sửa';
+                    taoNutSua.onclick = function suaTest() {
+                        let tenSanPhamSua = prompt('Nhập tên sản phẩm mới');
+                        let giaSanPhamSua = prompt('Nhập giá sản phẩm mới');
+                        let soLuongSanPhamSua = prompt('Nhập số lượng sản phẩm mới');
+                        if (tenSanPhamSua === '' || giaSanPhamSua === '' || soLuongSanPhamSua === '') {
+                            alert('Vui lòng nhập đầy đủ thông tin');
+                        } else {
+                            sanPham[parseInt(taoNutSua.id)][0] = tenSanPhamSua;
+                            sanPham[parseInt(taoNutSua.id)][1] = giaSanPhamSua;
+                            sanPham[parseInt(taoNutSua.id)][2] = soLuongSanPhamSua;
+                            alert('Sửa thành công!');
+                            hienThiSanPham();
+                        }
+                    }
+                    taoCotSua.appendChild(taoNutSua);
+                    taoDong.appendChild(taoCotSua);
+                }
+                bang.appendChild(taoDong);
+            }
+            bangHienThi.appendChild(bang);
+            bangHienThi.style.display = 'block';
+        }
+
+        //Hàm tạo uuid
+        function uuid() {
+            var temp_url = URL.createObjectURL(new Blob());
+            var uuid = temp_url.toString();
+            URL.revokeObjectURL(temp_url);
+            return uuid.substr(uuid.lastIndexOf('/') + 1);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600" style="border: 1px solid blue;"></canvas><br>
+    <button type="button" onclick="chayHCN()">Start</button>
+    <button type="button" onclick="clearInterval(chay)">Stop</button>
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        let ctx = canvas.getContext('2d');
+        let gtx = canvas.getContext('2d');
+        let chayRed, chayGreen;
+
+        const rectHeight = 1;
+        let yPositionRed = Math.floor(Math.random()*550);
+        let xPositionRed = Math.floor(Math.random()*750);
+        let yUpRed = true; 
+        let xRightRed = false;
+
+        let yPosition = Math.floor(Math.random()*550);
+        let xPosition = Math.floor(Math.random()*750);
+        let yUp = true; 
+        let xRight = false;
+        let crashRect = false;
+
+        function drawRectangle() {
+            //vẽ hình màu đỏ
+            ctx.clearRect(xPositionRed, yPositionRed, 50, 50);
+
+            if (yPositionRed < 0) {
+                yPositionRed += rectHeight;
+                yUpRed = false;
+            } else if (yPositionRed > 550) {
+                yPositionRed = 550 - rectHeight;
+                yUpRed = true;
+            }
+
+            if (xPositionRed < 0) {
+                xPositionRed += rectHeight;
+                xRightRed = true;
+            } else if (xPositionRed > 750) {
+                xPositionRed = 750 - rectHeight;
+                xRightRed = false;
+            }
+
+            if (yUpRed) {
+                yPositionRed -= rectHeight;
+            } else {
+                yPositionRed += rectHeight;
+            }
+
+            if (xRightRed) {
+                xPositionRed += rectHeight;
+            } else {
+                xPositionRed -= rectHeight;
+            }
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(xPositionRed, yPositionRed, 50, 50);
+
+            //vẽ hình màu Xanh
+            gtx.clearRect(xPosition, yPosition, 50, 50);
+
+            if (yPosition < 0) {
+                yPosition += rectHeight;
+                yUp = false;
+            } else if (yPosition > 550) {
+                yPosition = 550 - rectHeight;
+                yUp = true;
+            }
+
+            if (xPosition < 0) {
+                xPosition += rectHeight;
+                xRight = true;
+            } else if (xPosition > 750) {
+                xPosition = 750 - rectHeight;
+                xRight = false;
+            }
+
+            if (yUp) {
+                yPosition -= rectHeight;
+            } else {
+                yPosition += rectHeight;
+            }
+
+            if (xRight) {
+                xPosition += rectHeight;
+            } else {
+                xPosition -= rectHeight;
+            }
+
+            gtx.fillStyle = "green";
+            gtx.fillRect(xPosition, yPosition, 50, 50);
+
+            if (((xPositionRed <= xPosition && xPosition <= xPositionRed + 49) && (yPositionRed <= yPosition && yPosition <= yPositionRed + 49)) || (xPosition <= xPositionRed && xPositionRed <= xPosition + 49) && (yPosition <= yPositionRed && yPositionRed <= yPosition + 49)) {
+                crashRect = true;
+            }
+
+            if (crashRect) {
+                alert('Đụng Rồi~~~~~~');
+                clearInterval(chay);
+            }
+        }
+
+        function chayHCN() {
+            chay = setInterval(drawRectangle, 1);
+        }
+
+    </script>
+</body>
+</html>

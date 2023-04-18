@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid blue;"></canvas>
+
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        //vẽ trên mặt phẳng 0xy
+        let ctx = canvas.getContext('2d');
+
+        //vẽ đường tròn
+        ctx.arc(350, 350, 200, 0, 2 * Math.PI / 2, true);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(350, 350);
+        ctx.lineTo(350, 150);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(350, 350);
+        ctx.lineTo(150, 350);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(350, 350);
+        ctx.lineTo(550, 350);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(350, 350);
+        ctx.lineTo(209, 209);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(350, 350);
+        ctx.lineTo(491, 209);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+    </script>
+</body>
+</html>
