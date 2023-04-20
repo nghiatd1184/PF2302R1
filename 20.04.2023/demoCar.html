@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // định nghĩa lớp
+        class XeHoi {
+            constructor(hang, model, namsx) {
+                this.Hang = hang;
+                this.Model = model;
+                this.NamSx = namsx;
+            }
+            soNamSuDung() {
+                return new Date().getFullYear() - this.NamSx;
+            }
+            renew(nam) {
+                this.NamSx = nam;
+            }
+        }
+        // khai báo và sử dụng đối tượng thuộc lớp
+        let xh1 = new XeHoi('Mazda', 'CX8', 2020);
+        xh1['Mau Son'] = 'Đỏ';
+        console.log(xh1);
+        console.log('Xe đã sử dụng:', xh1.soNamSuDung(), 'năm');
+        xh1.renew(2022);
+        console.log(xh1);
+    </script>
+</body>
+</html>

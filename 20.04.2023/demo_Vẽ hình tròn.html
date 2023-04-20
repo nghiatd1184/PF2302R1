@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500" style="border: 1px solid blue;"></canvas><br>
+    Bán kính: <input type="number" id="banKinh"><br>
+    Màu: <input type="color" id="mau"><br>
+    <button type="button" onclick="themHinhTron()">Thêm</button>
+    <button type="button" onclick="veHinhTron()">Vẽ</button><br>
+    <div id="hienThiList"></div>
+    <script>
+        class Circle {
+            constructor(banKinh, mau) {
+                this.BanKinh = banKinh;
+                this.MauSac = mau;
+            }
+            getRadius() {
+                return this.BanKinh;
+            }
+            getArea() {
+                return Math.PI * this.BanKinh * this.BanKinh;
+            }
+            drawCircle(circle) {
+                circle.beginPath();
+                circle.arc(Math.random()*500, Math.random()*500, this.BanKinh, 0, 4 * Math.PI / 2, true);
+                circle.strokeStyle = this.MauSac;
+                circle.stroke();
+            }
+        }
+
+        let mangHinh = [];
+        let canvas = document.getElementById('myCanvas');
+        let circle = canvas.getContext('2d');
+        let danhSach = document.getElementById('hienThiList');
+        let chuoi = '';
+        
+        function themHinhTron() {
+            chuoi = '';
+            let banKinh = parseInt(document.getElementById('banKinh').value);
+            let mau = document.getElementById('mau').value;
+            mangHinh.push(new Circle(banKinh, mau));
+            for (let i = 0; i < mangHinh.length; i++) {
+                chuoi+= `Hình ${i+1}: Bán Kính: ${mangHinh[i].BanKinh}, Màu: ${mangHinh[i].MauSac} <br>`;
+            }
+            danhSach.innerHTML = chuoi;
+        }
+
+        function veHinhTron() {
+            circle.clearRect(0, 0, 500, 500);
+            for (let i in mangHinh) {
+                mangHinh[i].drawCircle(circle);
+            }
+        }
+    </script>
+</body>
+</html>
