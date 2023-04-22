@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500" style="border: 1px solid black"></canvas><br>
+    Nhập chiều dài mới: <input type="number" id="chieuDai"><br>
+    Nhập chiều rộng mới: <input type="number" id="chieuRong"><br>
+    <button type="button" onclick="veMoi()">Xử lý hình mới</button>
+    <div id="ketQua"></div>
+
+    <script>
+        class HinhChuNhat {
+            constructor(dai, rong) {
+                this.Dai = dai;
+                this.Rong = rong;
+            }
+            chuVi() {
+                return 2 * (this.Dai + this.Rong);
+            }
+            dienTich() {
+                return this.Dai * this.Rong;
+            }
+            veHinhChuNhat(hinhChuNhat) {
+                hinhChuNhat.beginPath();
+                hinhChuNhat.fillStyle = 'red';
+                hinhChuNhat.fillRect(0, 0, this.Dai, this.Rong);
+            }
+        }
+
+        let canvas = document.getElementById('myCanvas');
+        let hinhChuNhat = canvas.getContext('2d');
+        let hinhMau = new HinhChuNhat(100, 50);
+        hinhMau.veHinhChuNhat(hinhChuNhat);
+        document.getElementById('ketQua').innerHTML = `Chu vi = ${hinhMau.chuVi()}px. Diện Tích = ${hinhMau.dienTich()}px`;
+
+        function veMoi() {
+            let dai = parseInt(document.getElementById('chieuDai').value);
+            let rong = parseInt(document.getElementById('chieuRong').value);
+            hinhMau = new HinhChuNhat(dai, rong);
+            document.getElementById('ketQua').innerHTML = `Chu vi = ${hinhMau.chuVi()}px. Diện Tích = ${hinhMau.dienTich()}px`;
+            hinhChuNhat.clearRect(0, 0, 500, 500);
+            hinhMau.veHinhChuNhat(hinhChuNhat);
+        }
+
+    </script>
+</body>
+</html>

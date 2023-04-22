@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nhập Độ C: <input type="number" min="-273" id="doC"><br>
+    <button type="button" onclick="doiNhietDo()">Đổi</button>
+    <div id="ketQua"></div>
+
+    <script>
+        class Temperature {
+            constructor(c) {
+                this.DoC = c;
+            }
+            doiDoF() {
+                return (this.DoC * 1.8) + 32;
+            }
+            doiDoKelvin() {
+                return this.DoC + 273.15;
+            }
+        }
+
+        function doiNhietDo() {
+            let c = parseInt(document.getElementById("doC").value);
+            let doC = new Temperature(c);
+            document.getElementById("ketQua").innerHTML = `${c} độ C = ${doC.doiDoF()} Độ F = ${doC.doiDoKelvin()} Độ Kelvin`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3 id="dongHo">00:00:00</h3>
+    <button type="button" id="start" onclick="handleStart()">Start</button>
+    <button type="button" id="lap">Lap</button>
+    <button type="button" id="stop">Stop</button>
+
+    <script>
+        let myInterval = null;
+        let btnStart = document.getElementById('start');
+        let btnLap = document.getElementById('lap');
+        let btnStop = document.getElementById('stop');
+        let dongHo = document.getElementById('dongHo');
+
+        btnStop.disable = true;
+        btnLap.disable = true;
+        let startTime = null;
+
+        function handleStart() {
+            btnStart.disable = true;
+            btnStop.disable = false;
+            btnLap.disable = false;
+            startTime = new Date();
+            myInterval = setInterval(displayTime, 100);
+        }
+
+        function displayTime() {
+            let timeDistance = new Date(new Date() - startTime);
+            dongHo.innerHTML = timeDistance.getHours() + ':' + timeDistance.getMinutes() + ':' + timeDistance.getSeconds() + '.' + timeDistance.getMilliseconds();
+        }
+    </script>
+</body>
+</html>
