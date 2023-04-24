@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Add event listener on keydown
+        document.addEventListener('keydown', (event) => {
+          var name = event.key;
+          var code = event.code;
+          if (name === 'Control') {
+            // Do nothing.
+            return;
+          }
+          if (event.ctrlKey) {
+            alert(`Combination of ctrlKey + ${name} \n Key code Value: ${code}`);
+          } else {
+            alert(`Key pressed ${name} \n Key code Value: ${code}`);
+          }
+        }, false);
+        // Add event listener on keyup
+        document.addEventListener('keyup', (event) => {
+          var name = event.key;
+          if (name === 'Control') {
+            alert('Control key released');
+          }
+        }, false);
+      </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Điểm cao nhất: <p id="highestScore"></p>      Điểm: <p id="score"></p></h2>
+    <canvas id="board" width="400" height="400" style="border: 1px solid black;"></canvas><br>
+    <button type="button" onclick="startGame()">Bắt đầu</button>
+    <button type="button" onclick="clearInterval(move)">Dừng</button> 
+
+    <script>
+        class Snake {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+        
+        let canvas = document.getElementById("board");
+        let head = canvas.getContext("2d");
+        let apple = canvas.getContext("2d");
+        let body = canvas.getContext("2d");
+        let move;
+        let appleLocationX = Math.floor(Math.random()*20) * 20; 
+        let appleLocationY = Math.floor(Math.random()*20) * 20;
+        let direction = 'up';
+        let appleEated = false;
+
+        let snake = [];
+
+        snake.push(new  Snake(180, 180));
+        snake.push(new  Snake(180, 200));
+        snake.push(new  Snake(180, 220));
+
+        function drawSnake() {
+            head.clearRect(0, 0, 400, 400);
+            for (let i = 0; i < snake.length; i++) {
+                if (i === 0) {
+                    head.beginPath();
+                    head.fillStyle = "black";
+                    head.fillRect(snake[i].x, snake[i].y, 20, 20)
+                } else {
+                    body.beginPath();
+                    body.fillStyle = "green";
+                    body.fillRect(snake[i].x, snake[i].y, 20, 20)
+                }
+            }
+        }
+        
+        function controlSnake() {
+            for (let i = snake.length - 1; i > 0; i--) {
+                snake[i].x = snake[(i-1)].x;
+                snake[i].y = snake[(i-1)].y;
+            }
+            if (direction === 'up') {
+                snake[0].y -= 20;
+            }
+            if (direction === 'down') {
+                snake[0].y += 20;
+            }
+            if (direction === 'left') {
+                snake[0].x -= 20;
+            }
+            if (direction === 'right') {
+                snake[0].x += 20;
+            }
+        }
+
+        function randomApple() {
+            if (appleEated) {
+                appleLocationX = Math.floor(Math.random()*20) * 20; 
+                appleLocationY = Math.floor(Math.random()*20) * 20;
+                appleEated = false;
+            }
+            apple.beginPath();
+            apple.fillStyle = 'red';
+            apple.fillRect(appleLocationX, appleLocationY, 20, 20);
+        }
+
+        function eatApple() {
+            if (snake[0].x === appleLocationX && snake[0].y === appleLocationY) {
+                if (direction === 'up') {
+                    snake.unshift(new  Snake(snake[0].x, snake[0].y - 20));
+                }
+                if (direction === 'down') {
+                    snake.unshift(new  Snake(snake[0].x, snake[0].y + 20));
+                }
+                if (direction === 'left') {
+                    snake.unshift(new  Snake(snake[0].x -20, snake[0].y));
+                }
+                if (direction === 'right') {
+                    snake.unshift(new  Snake(snake[0].x + 20, snake[0].y));
+                }
+                appleEated = true;
+                document.getElementById("score").innerHTML = snake.length - 3;
+            }
+        }
+
+        function gameOver() {
+            if (snake[0].x >= 400 || snake[0].x < 0 || snake[0].y < 0 || snake[0].y >= 400) {
+                return true;
+            }
+            for (let i = 1; i < snake.length; i++) {
+                if (snake[0].x === snake[i].x && snake[0].y === snake[i].y ) {
+                return true;
+                }
+            }
+            return false;
+        }
+
+        onkeydown = function(e) {
+                    let key = e.keyCode;
+                    if (key === 38) {
+                       direction = 'up';
+                    }
+                    if (key === 40) {
+                       direction = 'down';
+                    }
+                    if (key === 37) {
+                       direction = 'left';
+                    }
+                    if (key === 39) {
+                       direction = 'right';
+                    }
+        }
+
+        function gamePlay() {
+            if (gameOver()) {
+                head.clearRect(0, 0, 400, 400);
+                head.beginPath();
+                head.font = '30px Arial';
+                head.strokeStyle = 'black';
+                head.lineWidth = 2;
+                head.strokeText('GAMEOVER', 0, 0);
+                clearInterval(move);
+            }
+            drawSnake();
+            randomApple();
+            controlSnake();
+            eatApple();
+        }
+
+        function startGame() {
+            move = setInterval(gamePlay,150);
+        }
+        
+        // up =38, down =40, left = 37, right =39
+    </script>
+</body>
+</html>
