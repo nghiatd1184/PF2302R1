@@ -7,10 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Điểm cao nhất: <p id="highestScore"></p>      Điểm: <p id="score"></p></h2>
-    <canvas id="board" width="400" height="400" style="border: 1px solid black;"></canvas><br>
-    <button type="button" onclick="startGame()">Bắt đầu</button>
-    <button type="button" onclick="clearInterval(move)">Dừng</button> 
+    
+    <div>
+        <canvas id="board" width="400" height="400" style="background-image: url(bg.jpg);"></canvas>
+        <form>
+            <h2 id="highestScore">Điểm cao nhất: 0</h2>
+            <h2 id="score">Điểm hiện tại: 0</h2>
+        </form>
+    </div>
+    <button type="button" onclick="startGame()">Bắt đầu / Chơi lại</button> 
 
     <script>
         class Snake {
@@ -24,25 +29,33 @@
         let head = canvas.getContext("2d");
         let apple = canvas.getContext("2d");
         let body = canvas.getContext("2d");
-        let move;
-        let appleLocationX = Math.floor(Math.random()*20) * 20; 
-        let appleLocationY = Math.floor(Math.random()*20) * 20;
+        let highestScore = document.getElementById("highestScore");
+        let move, max, headup, headdown, headleft, headright, tailup, taildown, tailleft, tailright, appleimg, bodyright, bodyleft, leftup, rightup, leftdown, rightdown;
+        let appleLocationX = Math.floor(Math.random()*18 + 1) * 20; 
+        let appleLocationY = Math.floor(Math.random()*18 + 1) * 20;
         let direction = 'up';
         let appleEated = false;
-
+        let score = [];
         let snake = [];
-
         snake.push(new  Snake(180, 180));
         snake.push(new  Snake(180, 200));
         snake.push(new  Snake(180, 220));
+
+        loadImage();
+
+        function loadImage() {
+            headup = new Image();
+            headup.src = 'headup.png';
+        }
 
         function drawSnake() {
             head.clearRect(0, 0, 400, 400);
             for (let i = 0; i < snake.length; i++) {
                 if (i === 0) {
                     head.beginPath();
-                    head.fillStyle = "black";
-                    head.fillRect(snake[i].x, snake[i].y, 20, 20)
+                    if (direction === 'up') {
+                        head.drawImage(headup, snake[i].x, snake[i].y);
+                    }
                 } else {
                     body.beginPath();
                     body.fillStyle = "green";
@@ -50,7 +63,7 @@
                 }
             }
         }
-        
+
         function controlSnake() {
             for (let i = snake.length - 1; i > 0; i--) {
                 snake[i].x = snake[(i-1)].x;
@@ -72,8 +85,8 @@
 
         function randomApple() {
             if (appleEated) {
-                appleLocationX = Math.floor(Math.random()*20) * 20; 
-                appleLocationY = Math.floor(Math.random()*20) * 20;
+                appleLocationX = Math.floor(Math.random()*18 + 1) * 20; 
+                appleLocationY = Math.floor(Math.random()*18 + 1) * 20;
                 appleEated = false;
             }
             apple.beginPath();
@@ -96,7 +109,7 @@
                     snake.unshift(new  Snake(snake[0].x + 20, snake[0].y));
                 }
                 appleEated = true;
-                document.getElementById("score").innerHTML = snake.length - 3;
+                document.getElementById("score").innerHTML =`Điểm hiện tại: ${snake.length - 3}`;
             }
         }
 
@@ -114,41 +127,57 @@
 
         onkeydown = function(e) {
                     let key = e.keyCode;
-                    if (key === 38) {
+                    if (key === 38 && direction !== 'down') {
                        direction = 'up';
                     }
-                    if (key === 40) {
+                    if (key === 40 && direction !== 'up') {
                        direction = 'down';
                     }
-                    if (key === 37) {
+                    if (key === 37 && direction !== 'right') {
                        direction = 'left';
                     }
-                    if (key === 39) {
+                    if (key === 39 && direction !== 'left') {
                        direction = 'right';
                     }
+        //up = 38, down = 40, left = 37, right = 39
         }
 
         function gamePlay() {
             if (gameOver()) {
                 head.clearRect(0, 0, 400, 400);
                 head.beginPath();
-                head.font = '30px Arial';
-                head.strokeStyle = 'black';
-                head.lineWidth = 2;
-                head.strokeText('GAMEOVER', 0, 0);
+                head.font = '40px Arial';
+                head.fillStyle = 'red';
+                head.fillText('GAMEOVER', 80, 210);
+                score.push(snake.length - 3);
+                max = score[0];
+                for (let i = 1; i < score.length; i++) {
+                    if (score[i] > max) {
+                        max = score[i];
+                    }
+                }
+                highestScore.innerHTML = `Điểm cao nhất: ${max}`;
                 clearInterval(move);
+            } else {
+                setTimeout(drawSnake(),50);
+                randomApple();
+                setTimeout(controlSnake(),50);
+                eatApple();
             }
-            drawSnake();
-            randomApple();
-            controlSnake();
-            eatApple();
         }
 
         function startGame() {
+            move = null;
+            appleLocationX = Math.floor(Math.random()*18 + 1) * 20; 
+            appleLocationY = Math.floor(Math.random()*18 + 1) * 20;
+            direction = 'up';
+            appleEated = false;
+            snake = [];
+            snake.push(new  Snake(180, 180));
+            snake.push(new  Snake(180, 200));
+            snake.push(new  Snake(180, 220));
             move = setInterval(gamePlay,150);
         }
-        
-        // up =38, down =40, left = 37, right =39
     </script>
 </body>
 </html>
