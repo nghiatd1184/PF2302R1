@@ -25,12 +25,9 @@ let direction = 'up';
 let appleEated = false;
 let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
+let bang = document.getElementById("bxh");
 
 loadImage();
-
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
 
 function loadImage() {
     appleImg = new Image();
@@ -73,6 +70,17 @@ function playGame() {
     } else {
         gameForm.style.display = "none";
         gameDiv.style.display = "block";
+    }
+    bang.innerHTML = "";
+    for (let i = 0; i < gameHistory.length; i++) {
+        let taoDong = document.createElement("tr");
+        let taoCot1 = document.createElement("td");
+        taoCot1.innerHTML = gameHistory[i].UserName;
+        let taoCot2 = document.createElement("td");
+        taoCot2.innerHTML = gameHistory[i].Score;
+        taoDong.appendChild(taoCot1);
+        taoDong.appendChild(taoCot2);
+        bang.appendChild(taoDong);
     }
 }
 
@@ -213,17 +221,22 @@ function gameCycle() {
         ctx.font = 'bold 60pt Comic Sans MS';
         ctx.fillStyle = '#d22f42';
         ctx.fillText('GAMEOVER', 73, 320);
-        gameHistory.push(new UserScore(userName, snake.length - 3))
-        max = gameHistory[0].Score;
-        for (let i = 1; i < gameHistory.length; i++) {
-            if (gameHistory[i].Score > max) {
-                max = gameHistory[i].Score;
-            }
-        }
-        highestScore.innerHTML = `<img src="trophy.png"> ${max}`;
-        gameHistory = gameHistory.filter(onlyUnique);
-        localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
+        gameHistory.push(new UserScore(userName, snake.length - 3));
         console.log(gameHistory);
+        gameHistory.sort(function (a, b) {return b.Score - a.Score});
+        highestScore.innerHTML = `<img src="trophy.png"> ${gameHistory[0].Score}`;
+        bang.innerHTML = "";
+        for (let i = 0; i < gameHistory.length; i++) {
+            let taoDong = document.createElement("tr");
+            let taoCot1 = document.createElement("td");
+            taoCot1.innerHTML = gameHistory[i].UserName;
+            let taoCot2 = document.createElement("td");
+            taoCot2.innerHTML = gameHistory[i].Score;
+            taoDong.appendChild(taoCot1);
+            taoDong.appendChild(taoCot2);
+            bang.appendChild(taoDong);
+        }
+        localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
     } else {
         drawSnake();
         randomApple();

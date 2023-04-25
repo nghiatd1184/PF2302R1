@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-    <div align="center" style="display: none; margin: 0 auto; width: max-content; height: 200px; padding-top: 200px;" id="gameForm">
+    <div align="center" style="display: block; margin: 0 auto; width: max-content; height: 200px; padding-top: 200px;" id="gameForm">
         <h2>Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
         <h2>
             Độ khó: 
@@ -39,10 +39,10 @@
         </h2>
         <button type="button" onclick="playGame()" id="buttonPlay">Play</button>
     </div>
-    <div style="margin: 0 auto; width: max-content; background-image: url(bgDiv.jpg); display: block;" id="gameDiv">
+    <div style="margin: 0 auto; width: max-content; background-image: url(bgDiv.jpg); display: none;" id="gameDiv">
         <div style="height: 100px;">
             <h2 style="padding-left: 440px; padding-top: 0px; font-size: 28pt; float: left; color: white;" id="score"><img src="appleScore.png"> 0</h2>
-            <h2 style="padding-top: 0px; padding-right: 260px; font-size: 28pt; float: right; color: white;" id="highestScore"><img src="trophy.png"> 0</h2>
+            <h2 style="padding-top: 0px; padding-right: 270px; font-size: 28pt; float: right; color: white;" id="highestScore"><img src="trophy.png"> 0</h2>
         </div>
         <canvas id="board" width="600" height="600" style="background-image: url(bgGreen.jpg); border: 15px #588a38 solid;"></canvas>
         <div style="float: right; border: 15px #588a38 solid; height: 600px;">
