@@ -9,8 +9,8 @@
 </head>
 <body>
     <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px;background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 120px;" id="gameForm">
-        <h2 style="color: #588a38;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
-        <h2>
+        <h2 style="color: black;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
+        <h2 style="color: black;">
             Độ khó: 
             <select name="mode" id="gameMode">
                 <option value="" disabled selected hidden>Chọn độ khó</option>
@@ -19,7 +19,7 @@
                 <option value="hardMode">Khó</option>
             </select>
         </h2>
-        <button type="button" onclick="playGame()" id="buttonPlay"></button>
+        <button type="button" onclick="playGame()" id="buttonPlay" title="Nhấn để chơi"></button>
     </div>
     <div style="margin: 0 auto; width: max-content; background-image: url(./images/bgDiv.jpg); display: none;" id="gameDiv">
         <div style="height: 100px;">
@@ -51,14 +51,25 @@
         </div>
         <div align="center" style="height: 80px; padding-left: 20px; padding-right: 20px;">
             <button type="button" onclick="backToForm()" id="buttonBack"></button>
-            <button type="button" onclick="startGame()" id="buttonStart"></button>
-            <button type="button" onclick="startGame()" id="buttonRestart"></button>
+            <button type="button" onclick="startGame()" class="buttonStart" id="buttonStart"></button>
             <button type="button" onclick="controlsAudio()" class="soundBtn" id="soundCtrl"></button>
         </div>
     </div>
 
-    <audio controls autoplay loop id="audioPlayer" style="display: none;">
+    <audio controls autoplay loop id="pageThemeSound" style="display: none;">
         <source src="./audio/jungleTheme.mp3" type="audio/mp3">
+    </audio>
+    <audio id="appleEatedSound" style="display: none;">
+        <source src="./audio/appleEated.wav" type="audio/mp3">
+    </audio>
+    <audio id="snakeMovingSound" style="display: none;">
+        <source src="./audio/snakeMovingSound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="gameOverSound" style="display: none;">
+        <source src="./audio/gameOverSound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="gameStartSound" style="display: none;">
+        <source src="./audio/gameStartSound.mp3" type="audio/mp3">
     </audio>
 
     <script src="snake.js"></script>

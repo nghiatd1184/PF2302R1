@@ -2,8 +2,11 @@ body {
     background-color: bisque;
     font-family: Comic;
     color: white;
+    background-image: url(./images/pageBg.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
-#buttonStart {
+.buttonStart {
     background: url(./images/buttonStart.png);
     cursor: pointer;
     height: 63px;
@@ -13,14 +16,14 @@ body {
     padding-left: 20px;
     padding-right: 20px;
 }
-#buttonStart:hover {
+.buttonStart:hover {
     background: url(./images/buttonStartHover.png);
 }
-#buttonStart:active {
+.buttonStart:active {
     background: url(./images/buttonStartClick.png);
 }
 
-#buttonRestart {
+.buttonRestart {
     background: url(./images/buttonRestart.png);
     cursor: pointer;
     height: 63px;
@@ -28,10 +31,10 @@ body {
     border: 0;
     margin: 0 auto;
 }
-#buttonRestart:hover {
+.buttonRestart:hover {
     background: url(./images/buttonRestartHover.png);
 }
-#buttonRestart:active {
+.buttonRestart:active {
     background: url(./images/buttonRestartClick.png);
 }
 #buttonBack {

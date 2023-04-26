@@ -22,7 +22,7 @@ let startBtn = document.getElementById("buttonStart");
 let playBtn = document.getElementById("buttonPlay");
 let gameDiv = document.getElementById("gameDiv");
 let gameForm = document.getElementById("gameForm");
-let audioPlayer = document.getElementById("audioPlayer");
+let themeSound = document.getElementById("pageThemeSound");
 let soundBtn = document.getElementById("soundCtrl");
 let direction = 'up';
 let appleEated = false;
@@ -31,17 +31,19 @@ let snake = [];
 let bang = document.getElementById("bxh");
 let xPre, yPre;
 
-startBtn.disable = true;
-
 loadImage();
 
 function backToForm() {
     gameForm.style.display = "block";
     gameDiv.style.display = "none";
+    document.getElementById("userName").value = "";
+    document.getElementById("userName").focus();
+    document.getElementById("gameMode").value = "";
+    startBtn.className = "buttonStart";
 }
 
 function controlsAudio() {
-    audioPlayer.muted = !audioPlayer.muted;
+    themeSound.muted = !themeSound.muted;
     if (soundBtn.className === "soundBtn") {
         soundBtn.className = "soundOffBtn";
     } else {
@@ -91,7 +93,8 @@ function playGame() {
         gameForm.style.display = "none";
         gameDiv.style.display = "block";
         drawRanking();
-        audioPlayer.play();
+        themeSound.play();
+        themeSound.volume = 0.3;
     }
 }
 
@@ -232,6 +235,7 @@ function eatApple() {
             snake.push(new  Snake(snake[snake.length-1].x + 20, snake[snake.length - 1].y));
         }
         appleEated = true;
+        document.getElementById("appleEatedSound").play();
         randomApple();
         document.getElementById("score").innerHTML =`<img src="./images/appleScore.png"> ${snake.length - 3}`;
     }
@@ -243,31 +247,36 @@ function gameOver() {
     }
     for (let i = 1; i < snake.length; i++) {
         if (snake[0].x === snake[i].x && snake[0].y === snake[i].y ) {
-        return true;
+            return true;
         }
     }
     return false;
 }
 
 onkeydown = function(e) {
-            let key = e.keyCode;
-            if (key === 38 && direction !== 'down') {
-               direction = 'up';
-            }
-            if (key === 40 && direction !== 'up') {
-               direction = 'down';
-            }
-            if (key === 37 && direction !== 'right') {
-               direction = 'left';
-            }
-            if (key === 39 && direction !== 'left') {
-               direction = 'right';
-            }
+    let key = e.keyCode;
+    if (key === 38 && direction !== 'down') {
+        direction = 'up';
+    }
+    if (key === 40 && direction !== 'up') {
+        direction = 'down';
+    }
+    if (key === 37 && direction !== 'right') {
+        direction = 'left';
+    }
+    if (key === 39 && direction !== 'left') {
+        direction = 'right';
+    }
+    if (key === 38 || key === 37 || key === 39 || key === 40) {
+        document.getElementById("snakeMovingSound").play();
+    }
 //up = 38, down = 40, left = 37, right = 39
 }
 
 function gameCycle() {
     if (gameOver()) {
+        document.getElementById("gameOverSound").play();
+        startBtn.className = "buttonRestart";
         ctx.clearRect(0, 0, 600, 600);
         ctx.beginPath();
         ctx.font = 'bold 60pt Comic Sans MS';
@@ -288,6 +297,7 @@ function gameCycle() {
 function startGame() {
     move = null;
     ctx.clearRect(0, 0, 600, 600);
+    document.getElementById("gameStartSound").play();
     appleLocationX = Math.floor(Math.random()*30) * 20; 
     appleLocationY = Math.floor(Math.random()*30) * 20;
     while (checkAppleLocation() === false) {
