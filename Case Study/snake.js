@@ -6,60 +6,80 @@ class Snake {
 }
 
 class UserScore {
-    constructor(userName, score) {
+    constructor(userName, score, gameMode) {
         this.UserName = userName;
         this.Score = score;
+        this.GameMode = gameMode;
     }
 }
 
 let canvas = document.getElementById("board");
 let ctx = canvas.getContext("2d");
 let highestScore = document.getElementById("highestScore");
-let move, max, headup, headdown, headleft, headright, tailup, taildown, tailleft, tailright, appleImg, bodyright, bodyleft, leftup, rightup, leftdown, rightdown;
+let move, max, headUp, headDown, headLeft, headRight, tailUp, tailDown, tailLeft, tailRight, appleImg, bodyRight, bodyLeft, leftUp, rightUp, leftDown, rightDown;
 let appleLocationX, appleLocationY, gameMode, userName;
 let startBtn = document.getElementById("buttonStart");
 let playBtn = document.getElementById("buttonPlay");
 let gameDiv = document.getElementById("gameDiv");
 let gameForm = document.getElementById("gameForm");
+let audioPlayer = document.getElementById("audioPlayer");
+let soundBtn = document.getElementById("soundCtrl");
 let direction = 'up';
 let appleEated = false;
 let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
 let bang = document.getElementById("bxh");
+let xPre, yPre;
+
+startBtn.disable = true;
 
 loadImage();
 
+function backToForm() {
+    gameForm.style.display = "block";
+    gameDiv.style.display = "none";
+}
+
+function controlsAudio() {
+    audioPlayer.muted = !audioPlayer.muted;
+    if (soundBtn.className === "soundBtn") {
+        soundBtn.className = "soundOffBtn";
+    } else {
+        soundBtn.className = "soundBtn";
+    }
+}
+
 function loadImage() {
     appleImg = new Image();
-    appleImg.src = 'apple.png';
-    headup = new Image();
-    headup.src = 'headup.png';
-    headdown = new Image();
-    headdown.src = 'headdown.png';
-    headleft = new Image();
-    headleft.src = 'headleft.png';
-    headright = new Image();
-    headright.src = 'headright.png';
-    tailup = new Image();
-    tailup.src = 'tailup.png';
-    taildown = new Image();
-    taildown.src = 'taildown.png';
-    tailleft = new Image();
-    tailleft.src = 'tailleft.png';
-    tailright = new Image();
-    tailright.src = 'tailright.png';
-    bodyright = new Image();
-    bodyright.src = 'bodyright.png';
-    bodyup = new Image();
-    bodyup.src = 'bodyup.png';
-    leftup = new Image();
-    leftup.src = 'leftup.png';
-    leftdown = new Image();
-    leftdown.src = 'leftdown.png';
-    rightdown = new Image();
-    rightdown.src = 'rightdown.png';
-    rightup = new Image();
-    rightup.src = 'rightup.png';
+    appleImg.src = './images/apple.png';
+    headUp = new Image();
+    headUp.src = './images/headup.png';
+    headDown = new Image();
+    headDown.src = './images/headdown.png';
+    headLeft = new Image();
+    headLeft.src = './images/headleft.png';
+    headRight = new Image();
+    headRight.src = './images/headright.png';
+    tailUp = new Image();
+    tailUp.src = './images/tailup.png';
+    tailDown = new Image();
+    tailDown.src = './images/taildown.png';
+    tailLeft = new Image();
+    tailLeft.src = './images/tailleft.png';
+    tailRight = new Image();
+    tailRight.src = './images/tailright.png';
+    bodyRight = new Image();
+    bodyRight.src = './images/bodyright.png';
+    bodyUp = new Image();
+    bodyUp.src = './images/bodyup.png';
+    leftUp = new Image();
+    leftUp.src = './images/leftup.png';
+    leftDown = new Image();
+    leftDown.src = './images/leftdown.png';
+    rightDown = new Image();
+    rightDown.src = './images/rightdown.png';
+    rightUp = new Image();
+    rightUp.src = './images/rightup.png';
 }
 
 function playGame() {
@@ -70,62 +90,94 @@ function playGame() {
     } else {
         gameForm.style.display = "none";
         gameDiv.style.display = "block";
+        drawRanking();
+        audioPlayer.play();
     }
+}
+
+function drawRanking() {
     bang.innerHTML = "";
+    gameHistory.sort(function (a, b) {return b.Score - a.Score});
+    let gameModeText;
+    if (gameMode === "easyMode") {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>DỄ`;
+        gameModeText = "Dễ";
+    } else if (gameMode === "normalMode") {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>THƯỜNG`;
+        gameModeText = "Thường";
+    } else {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>KHÓ`;
+        gameModeText = "Khó";
+    }
+    let count = 0;
     for (let i = 0; i < gameHistory.length; i++) {
-        let taoDong = document.createElement("tr");
-        let taoCot1 = document.createElement("td");
-        taoCot1.innerHTML = gameHistory[i].UserName;
-        let taoCot2 = document.createElement("td");
-        taoCot2.innerHTML = gameHistory[i].Score;
-        taoDong.appendChild(taoCot1);
-        taoDong.appendChild(taoCot2);
-        bang.appendChild(taoDong);
+        if (gameHistory[i].GameMode === gameMode) {
+            let taoDong = document.createElement("tr");
+            let taoCot1 = document.createElement("td");
+            let taoCot2 = document.createElement("td");
+            let taoCot3 = document.createElement("td");
+            taoCot1.innerHTML = gameHistory[i].UserName;
+            taoCot2.innerHTML = gameHistory[i].Score;
+            taoCot3.innerHTML = gameModeText;
+            taoDong.appendChild(taoCot1);
+            taoDong.appendChild(taoCot2);
+            taoDong.appendChild(taoCot3);
+            bang.appendChild(taoDong);
+            count++;
+        }
+        if (count === 14) {
+            break;
+        }
     }
 }
 
 function drawSnake() {
-    ctx.clearRect(0, 0, 600, 600);
+    ctx.clearRect(xPre, yPre, 20, 20);
+    for (let i = 0; i < snake.length; i++) {
+        ctx.clearRect(snake[i].x, snake[i].y, 20, 20);
+    }
     for (let i = 0; i < snake.length; i++) {
         if (i === 0) {
             if (snake[i].x === snake[i+1].x && snake[i].y > snake[i+1].y) {
-                ctx.drawImage(headdown, snake[i].x, snake[i].y);
+                ctx.drawImage(headDown, snake[i].x, snake[i].y);
             } else if (snake[i].x === snake[i+1].x && snake[i].y < snake[i+1].y) {
-                ctx.drawImage(headup, snake[i].x, snake[i].y);
+                ctx.drawImage(headUp, snake[i].x, snake[i].y);
             } else if (snake[i].x < snake[i+1].x && snake[i].y === snake[i+1].y) {
-                ctx.drawImage(headleft, snake[i].x, snake[i].y);
+                ctx.drawImage(headLeft, snake[i].x, snake[i].y);
             } else if (snake[i].x > snake[i+1].x && snake[i].y === snake[i+1].y) {
-                ctx.drawImage(headright, snake[i].x, snake[i].y);
+                ctx.drawImage(headRight, snake[i].x, snake[i].y);
             }
         } else if (i === snake.length - 1) {
             if (snake[i].x === snake[i-1].x && snake[i].y > snake[i-1].y) {
-                ctx.drawImage(tailup, snake[i].x, snake[i].y);
+                ctx.drawImage(tailUp, snake[i].x, snake[i].y);
             } else if (snake[i].x === snake[i-1].x && snake[i].y < snake[i-1].y) {
-                ctx.drawImage(taildown, snake[i].x, snake[i].y);
+                ctx.drawImage(tailDown, snake[i].x, snake[i].y);
             } else if (snake[i].x < snake[i-1].x && snake[i].y === snake[i-1].y) {
-                ctx.drawImage(tailright, snake[i].x, snake[i].y);
+                ctx.drawImage(tailRight, snake[i].x, snake[i].y);
             } else if (snake[i].x > snake[i-1].x && snake[i].y === snake[i-1].y) {
-                ctx.drawImage(tailleft, snake[i].x, snake[i].y);
+                ctx.drawImage(tailLeft, snake[i].x, snake[i].y);
             }
         } else {
             if (snake[i].x === snake[i-1].x && snake[i].x === snake[i+1].x) {
-                ctx.drawImage(bodyup, snake[i].x, snake[i].y);
+                ctx.drawImage(bodyUp, snake[i].x, snake[i].y);
             } else if (snake[i].y === snake[i-1].y && snake[i].y === snake[i+1].y) {
-                ctx.drawImage(bodyright, snake[i].x, snake[i].y);
+                ctx.drawImage(bodyRight, snake[i].x, snake[i].y);
             } else if ((snake[i].x === snake[i-1].x && snake[i].y === snake[i+1].y && snake[i-1].x > snake[i+1].x && snake[i-1].y < snake[i+1].y) || (snake[i].x === snake[i+1].x && snake[i].y === snake[i-1].y && snake[i-1].x < snake[i+1].x && snake[i-1].y > snake[i+1].y)) {
-                ctx.drawImage(rightup, snake[i].x, snake[i].y);
+                ctx.drawImage(rightUp, snake[i].x, snake[i].y);
             } else if ((snake[i].x === snake[i-1].x && snake[i].y === snake[i+1].y && snake[i-1].x < snake[i+1].x && snake[i-1].y < snake[i+1].y) || (snake[i].x === snake[i+1].x && snake[i].y === snake[i-1].y && snake[i-1].x > snake[i+1].x && snake[i-1].y > snake[i+1].y)) {
-                ctx.drawImage(leftup, snake[i].x, snake[i].y);
+                ctx.drawImage(leftUp, snake[i].x, snake[i].y);
             } else if ((snake[i].x === snake[i-1].x && snake[i].y === snake[i+1].y && snake[i-1].x > snake[i+1].x && snake[i-1].y > snake[i+1].y) || (snake[i].x === snake[i+1].x && snake[i].y === snake[i-1].y && snake[i-1].x < snake[i+1].x && snake[i-1].y < snake[i+1].y)) {
-                ctx.drawImage(rightdown, snake[i].x, snake[i].y);
+                ctx.drawImage(rightDown, snake[i].x, snake[i].y);
             } else if ((snake[i].x === snake[i-1].x && snake[i].y === snake[i+1].y && snake[i-1].x < snake[i+1].x && snake[i-1].y > snake[i+1].y) || (snake[i].x === snake[i+1].x && snake[i].y === snake[i-1].y && snake[i-1].x > snake[i+1].x && snake[i-1].y < snake[i+1].y)) {
-                ctx.drawImage(leftdown, snake[i].x, snake[i].y);
+                ctx.drawImage(leftDown, snake[i].x, snake[i].y);
             }
         }
     }
 }
 
 function controlSnake() {
+    xPre = snake[snake.length-1].x;
+    yPre = snake[snake.length-1].y;
     for (let i = snake.length - 1; i > 0; i--) {
         snake[i].x = snake[(i-1)].x;
         snake[i].y = snake[(i-1)].y;
@@ -180,7 +232,8 @@ function eatApple() {
             snake.push(new  Snake(snake[snake.length-1].x + 20, snake[snake.length - 1].y));
         }
         appleEated = true;
-        document.getElementById("score").innerHTML =`<img src="appleScore.png"> ${snake.length - 3}`;
+        randomApple();
+        document.getElementById("score").innerHTML =`<img src="./images/appleScore.png"> ${snake.length - 3}`;
     }
 }
 
@@ -215,31 +268,18 @@ onkeydown = function(e) {
 
 function gameCycle() {
     if (gameOver()) {
-        clearInterval(move);
         ctx.clearRect(0, 0, 600, 600);
         ctx.beginPath();
         ctx.font = 'bold 60pt Comic Sans MS';
         ctx.fillStyle = '#d22f42';
         ctx.fillText('GAMEOVER', 73, 320);
-        gameHistory.push(new UserScore(userName, snake.length - 3));
-        console.log(gameHistory);
-        gameHistory.sort(function (a, b) {return b.Score - a.Score});
-        highestScore.innerHTML = `<img src="trophy.png"> ${gameHistory[0].Score}`;
-        bang.innerHTML = "";
-        for (let i = 0; i < gameHistory.length; i++) {
-            let taoDong = document.createElement("tr");
-            let taoCot1 = document.createElement("td");
-            taoCot1.innerHTML = gameHistory[i].UserName;
-            let taoCot2 = document.createElement("td");
-            taoCot2.innerHTML = gameHistory[i].Score;
-            taoDong.appendChild(taoCot1);
-            taoDong.appendChild(taoCot2);
-            bang.appendChild(taoDong);
-        }
+        gameHistory.push(new UserScore(userName, snake.length - 3, gameMode));
         localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
+        drawRanking();
+        console.log(gameHistory);
+        clearInterval(move);
     } else {
         drawSnake();
-        randomApple();
         controlSnake();
         eatApple();
     }
@@ -247,13 +287,14 @@ function gameCycle() {
 
 function startGame() {
     move = null;
+    ctx.clearRect(0, 0, 600, 600);
     appleLocationX = Math.floor(Math.random()*30) * 20; 
     appleLocationY = Math.floor(Math.random()*30) * 20;
-    console.log();
     while (checkAppleLocation() === false) {
         appleLocationX = Math.floor(Math.random()*30) * 20; 
         appleLocationY = Math.floor(Math.random()*30) * 20;
     }
+    randomApple();
     direction = 'up';
     appleEated = false;
     snake = [];
@@ -267,5 +308,4 @@ function startGame() {
     } else {
         move = setInterval(gameCycle,50);
     }
-
 }

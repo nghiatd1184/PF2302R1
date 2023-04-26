@@ -5,29 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
-    <style>
-        body {
-            background-color: bisque;
-        }
-        #buttonStart {
-            background: url(buttonStart.png);
-            cursor: pointer;
-            height: 63px;
-            width: 100px;
-            border: 0;
-            margin: 0 auto;
-        }
-        #buttonStart:hover {
-            background: url(buttonStartHover.png);
-        }
-        #buttonStart:active {
-            background: url(buttonStartClick.png);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div align="center" style="display: block; margin: 0 auto; width: max-content; height: 200px; padding-top: 200px;" id="gameForm">
-        <h2>Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
+    <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px;background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 120px;" id="gameForm">
+        <h2 style="color: #588a38;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
         <h2>
             Độ khó: 
             <select name="mode" id="gameMode">
@@ -37,27 +19,29 @@
                 <option value="hardMode">Khó</option>
             </select>
         </h2>
-        <button type="button" onclick="playGame()" id="buttonPlay">Play</button>
+        <button type="button" onclick="playGame()" id="buttonPlay"></button>
     </div>
-    <div style="margin: 0 auto; width: max-content; background-image: url(bgDiv.jpg); display: none;" id="gameDiv">
+    <div style="margin: 0 auto; width: max-content; background-image: url(./images/bgDiv.jpg); display: none;" id="gameDiv">
         <div style="height: 100px;">
-            <h2 style="padding-left: 440px; padding-top: 0px; font-size: 28pt; float: left; color: white;" id="score"><img src="appleScore.png"> 0</h2>
-            <h2 style="padding-top: 0px; padding-right: 270px; font-size: 28pt; float: right; color: white;" id="highestScore"><img src="trophy.png"> 0</h2>
+            <h2 style="padding-right: 365px; padding-top: 0px; font-size: 28pt; float: right; color: white;" id="score">0 <img src="./images/appleScore.png"> </h2>
         </div>
-        <canvas id="board" width="600" height="600" style="background-image: url(bgGreen.jpg); border: 15px #588a38 solid;"></canvas>
+        <canvas id="board" width="600" height="600" style="background-image: url(./images/bgGreen.jpg); border: 15px #588a38 solid;"></canvas>
         <div style="float: right; border: 15px #588a38 solid; height: 600px;">
             <table cellpadding = "5" cellspacing = 5 style="color: white;">
                 <tr style="">
-                    <td colspan="2" align="center" style="font-size: 19pt; font-weight: bold;">
+                    <td colspan="3" align="center" style="font-size: 22pt; font-weight: bold;" id="gameModeTitle">
                         BẢNG XẾP HẠNG
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        TÊN NGƯỜI CHƠI
+                        <b>TÊN NGƯỜI CHƠI</b> 
                     </td>
                     <td>
-                        ĐIỂM SỐ
+                        <b>ĐIỂM SỐ</b> 
+                    </td>
+                    <td>
+                        <b>ĐỘ KHÓ</b> 
                     </td>
                 </tr>
                 <tbody id="bxh">
@@ -65,10 +49,17 @@
                 </tbody>
             </table>
         </div>
-        <div align="center" style="height: 80px;">
+        <div align="center" style="height: 80px; padding-left: 20px; padding-right: 20px;">
+            <button type="button" onclick="backToForm()" id="buttonBack"></button>
             <button type="button" onclick="startGame()" id="buttonStart"></button>
+            <button type="button" onclick="startGame()" id="buttonRestart"></button>
+            <button type="button" onclick="controlsAudio()" class="soundBtn" id="soundCtrl"></button>
         </div>
     </div>
+
+    <audio controls autoplay loop id="audioPlayer" style="display: none;">
+        <source src="./audio/jungleTheme.mp3" type="audio/mp3">
+    </audio>
 
     <script src="snake.js"></script>
 </body>

@@ -1,0 +1,101 @@
+body {
+    background-color: bisque;
+    font-family: Comic;
+    color: white;
+}
+#buttonStart {
+    background: url(./images/buttonStart.png);
+    cursor: pointer;
+    height: 63px;
+    width: 100px;
+    border: 0;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#buttonStart:hover {
+    background: url(./images/buttonStartHover.png);
+}
+#buttonStart:active {
+    background: url(./images/buttonStartClick.png);
+}
+
+#buttonRestart {
+    background: url(./images/buttonRestart.png);
+    cursor: pointer;
+    height: 63px;
+    width: 100px;
+    border: 0;
+    margin: 0 auto;
+}
+#buttonRestart:hover {
+    background: url(./images/buttonRestartHover.png);
+}
+#buttonRestart:active {
+    background: url(./images/buttonRestartClick.png);
+}
+#buttonBack {
+    background: url(./images/buttonBack.png);
+    cursor: pointer;
+    height: 63px;
+    width: 55px;
+    border: 0;
+    margin: 0 auto;
+    float: left;
+}
+#buttonBack:hover {
+    background: url(./images/buttonBackHover.png);
+}
+#buttonBack:active {
+    background: url(./images/buttonBackClick.png);
+}
+.soundBtn {
+    background: url(./images/buttonSound.png);
+    cursor: pointer;
+    height: 63px;
+    width: 55px;
+    border: 0;
+    margin: 0 auto;
+    float: right;
+}
+.soundBtn:hover {
+    background: url(./images/buttonSoundHover.png);
+}
+.soundBtn:active {
+    background: url(./images/buttonSoundClick.png);
+}
+.soundOffBtn {
+    background: url(./images/buttonSoundOff.png);
+    cursor: pointer;
+    height: 63px;
+    width: 55px;
+    border: 0;
+    margin: 0 auto;
+    float: right;
+}
+.soundOffBtn:hover {
+    background: url(./images/buttonSoundOffHover.png);
+}
+.soundOffBtn:active {
+    background: url(./images/buttonSoundOffClick.png);
+}
+#buttonPlay {
+    background: url(./images/buttonPlay.png);
+    cursor: pointer;
+    height: 63px;
+    width: 100px;
+    border: 0;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#buttonPlay:hover {
+    background: url(./images/buttonPlayHover.png);
+}
+#buttonPlay:active {
+    background: url(./images/buttonPlayClick.png);
+}
+@font-face {
+    src: url(./font/SVN-Comic\ Sans\ MS.ttf);
+    font-family: Comic;
+}
