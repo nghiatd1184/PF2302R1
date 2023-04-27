@@ -1,5 +1,5 @@
 body {
-    background-color: bisque;
+    background-color: #14241a;
     font-family: Comic;
     color: white;
     background-image: url(./images/pageBg.jpg);
@@ -101,4 +101,19 @@ body {
 @font-face {
     src: url(./font/SVN-Comic\ Sans\ MS.ttf);
     font-family: Comic;
+}
+input{
+    border-radius: 8px;
+    border: 0px;
+    height: fit-content;
+    width: 130px;
+    padding: 3px;
+    background-color: #ffffff;
+}
+select {
+    border-radius: 8px;
+    border: 0px;
+    height: fit-content;
+    padding: 3px;
+    background-color: #ffffff;
 }
