@@ -17,7 +17,7 @@ let canvas = document.getElementById("board");
 let ctx = canvas.getContext("2d");
 let highestScore = document.getElementById("highestScore");
 let move, max, headUp, headDown, headLeft, headRight, tailUp, tailDown, tailLeft, tailRight, appleImg, bodyRight, bodyLeft, leftUp, rightUp, leftDown, rightDown;
-let appleLocationX, appleLocationY, gameMode, userName;
+let appleLocationX, appleLocationY, gameMode, userName, yasuoOver;
 let startBtn = document.getElementById("buttonStart");
 let playBtn = document.getElementById("buttonPlay");
 let gameDiv = document.getElementById("gameDiv");
@@ -30,6 +30,10 @@ let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
 let bang = document.getElementById("bxh");
 let xPre, yPre;
+let xPosition, yPosition, yasuo, warning, run;
+let moveDistance = 5;
+yPosition = Math.floor(Math.random()*27) * 20;
+xPosition = -100;
 
 loadImage();
 
@@ -52,6 +56,12 @@ function controlsAudio() {
 }
 
 function loadImage() {
+    yasuo = new Image();
+    yasuo.src = "./images/yasuoRunning.png";
+    warning = new Image();
+    warning.src = "./images/warning.png";
+    yasuoOver = new Image();
+    yasuoOver.src = './images/gameOver.png';
     appleImg = new Image();
     appleImg.src = './images/apple.png';
     headUp = new Image();
@@ -82,6 +92,29 @@ function loadImage() {
     rightDown.src = './images/rightdown.png';
     rightUp = new Image();
     rightUp.src = './images/rightup.png';
+}
+
+function runningYasuo() {
+    ctx.clearRect(xPosition, yPosition, 100, 80);
+    if (xPosition >= -100) {
+        xPosition += moveDistance;
+    }
+    if (xPosition === 600) {
+        xPosition = -100;
+        yPosition = Math.floor(Math.random()*27) * 20;
+        return;
+    }
+    ctx.drawImage(yasuo, xPosition, yPosition);
+    setTimeout(arguments.callee, 10);
+}
+
+function yasuoComing() {
+    ctx.drawImage(warning, 0, yPosition);
+    setTimeout(function () {
+        ctx.clearRect(0, yPosition, 20, 80);
+        runningYasuo();
+    }, 3000);
+    run = setTimeout(arguments.callee, 10000);
 }
 
 function playGame() {
@@ -275,13 +308,15 @@ onkeydown = function(e) {
 
 function gameCycle() {
     if (gameOver()) {
+        clearTimeout(run);
         document.getElementById("gameOverSound").play();
         startBtn.className = "buttonRestart";
         ctx.clearRect(0, 0, 600, 600);
         ctx.beginPath();
-        ctx.font = 'bold 60pt Comic Sans MS';
-        ctx.fillStyle = '#d22f42';
-        ctx.fillText('GAMEOVER', 73, 320);
+        //ctx.font = 'bold 60pt Comic Sans MS';
+        //ctx.fillStyle = '#d22f42';
+        //ctx.fillText('GAMEOVER', 73, 320);
+        ctx.drawImage(yasuoOver, 100, 100);
         gameHistory.push(new UserScore(userName, snake.length - 3, gameMode));
         localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
         drawRanking();
@@ -297,6 +332,7 @@ function gameCycle() {
 function startGame() {
     move = null;
     ctx.clearRect(0, 0, 600, 600);
+    
     document.getElementById("gameStartSound").play();
     appleLocationX = Math.floor(Math.random()*30) * 20; 
     appleLocationY = Math.floor(Math.random()*30) * 20;
@@ -318,4 +354,5 @@ function startGame() {
     } else {
         move = setInterval(gameCycle,50);
     }
+    setTimeout(yasuoComing, 5000);
 }

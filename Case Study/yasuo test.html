@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600" style="border: 1px solid black; background-image: url(./images/bgGreen.jpg);"></canvas> <br>
+    <button type="button" onclick="yasuoComing()">chạy</button>
+    <button type="button" onclick="clearTimeout(move)">dừng</button>
+
+    <script>
+        let canvas = document.getElementById("myCanvas");
+        let ctx = canvas.getContext("2d");
+        let xPosition, yPosition, yasuo, warning, move;
+        let moveDistance = 5;
+
+        yPosition = Math.floor(Math.random()*27) * 20;
+        xPosition = -100;
+
+        function loadImages() {
+            yasuo = new Image();
+            yasuo.src = "./images/yasuoRunning.png";
+            warning = new Image();
+            warning.src = "./images/warning.png";
+        }
+        loadImages();
+
+        function runningYasuo() {
+            ctx.clearRect(xPosition, yPosition, 100, 80);
+            if (xPosition >= -100) {
+                xPosition += moveDistance;
+            }
+            if (xPosition === 600) {
+                xPosition = -100;
+                yPosition = Math.floor(Math.random()*27) * 20;
+                return;
+            }
+            console.log(xPosition);
+            ctx.drawImage(yasuo, xPosition, yPosition);
+            move = setTimeout(arguments.callee, 10);
+        }
+
+        function yasuoComing() {
+            ctx.drawImage(warning, 0, yPosition);
+            setTimeout(function () {
+                ctx.clearRect(0, yPosition, 20, 80);
+                runningYasuo();
+            }, 3000);
+        }
+
+        setInterval(yasuoComing, 10000);
+
+
+    </script>
+</body>
+</html>
