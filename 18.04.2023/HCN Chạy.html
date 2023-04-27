@@ -8,13 +8,13 @@
 </head>
 <body>
     <canvas id="myCanvas" width="800" height="600" style="border: 1px solid blue;"></canvas><br>
-    <button type="button" onclick="chayHCN()">Start</button>
-    <button type="button" onclick="clearInterval(chay)">Stop</button>
+    <button type="button" onclick="chayHCN()" id="startBtn">Start</button>
+    <button type="button" onclick="startBtn.disable = true">Stop</button>
     <script>
         let canvas = document.getElementById('myCanvas');
         let ctx = canvas.getContext('2d');
-        let gtx = canvas.getContext('2d');
-        let chayRed, chayGreen;
+        let chay;
+        let startBtn = document.getElementById("startBtn");
 
         const rectHeight = 1;
         let yPositionRed = Math.floor(Math.random()*550);
@@ -26,7 +26,13 @@
         let xPosition = Math.floor(Math.random()*750);
         let yUp = true; 
         let xRight = false;
-        let crashRect = false;
+
+        function isCollision() {
+            let distX = Math.abs((xPosition + 25) - (xPositionRed + 25));
+            let distY = Math.abs((yPosition + 25) - (yPositionRed + 25));
+
+            return (distX <= 50 && distY <= 50);
+        }
 
         function drawRectangle() {
             //vẽ hình màu đỏ
@@ -64,7 +70,7 @@
             ctx.fillRect(xPositionRed, yPositionRed, 50, 50);
 
             //vẽ hình màu Xanh
-            gtx.clearRect(xPosition, yPosition, 50, 50);
+            ctx.clearRect(xPosition, yPosition, 50, 50);
 
             if (yPosition < 0) {
                 yPosition += rectHeight;
@@ -94,21 +100,19 @@
                 xPosition -= rectHeight;
             }
 
-            gtx.fillStyle = "green";
-            gtx.fillRect(xPosition, yPosition, 50, 50);
+            ctx.fillStyle = "green";
+            ctx.fillRect(xPosition, yPosition, 50, 50);
 
-            if (((xPositionRed <= xPosition && xPosition <= xPositionRed + 49) && (yPositionRed <= yPosition && yPosition <= yPositionRed + 49)) || (xPosition <= xPositionRed && xPositionRed <= xPosition + 49) && (yPosition <= yPositionRed && yPositionRed <= yPosition + 49)) {
-                crashRect = true;
-            }
-
-            if (crashRect) {
-                alert('Đụng Rồi~~~~~~');
+            if (isCollision()) {
                 clearInterval(chay);
+                alert('Đụng Rồi~~~~~~');
+                startBtn.disabled = false;
             }
         }
 
         function chayHCN() {
             chay = setInterval(drawRectangle, 1);
+            startBtn.disabled = true;
         }
 
     </script>

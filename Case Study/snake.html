@@ -9,7 +9,7 @@
 </head>
 <body>
     <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px;background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 130px;" id="gameForm">
-        <h2 style="color: black;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên người chơi"></h2>
+        <h2 style="color: black;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên của bạn"></h2>
         <h2 style="color: black;">
             Độ khó: 
             <select name="mode" id="gameMode">
@@ -60,7 +60,7 @@
     </div>
 
     <audio controls autoplay loop id="pageThemeSound" style="display: none;">
-        <source src="./audio/jungleTheme.mp3" type="audio/mp3">
+        <source src="./audio/pageTheme.mp3" type="audio/mp3">
     </audio>
     <audio id="appleEatedSound" style="display: none;">
         <source src="./audio/appleEated.wav" type="audio/mp3">
@@ -73,6 +73,18 @@
     </audio>
     <audio id="gameStartSound" style="display: none;">
         <source src="./audio/gameStartSound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="yasuoWaring" style="display: none;">
+        <source src="./audio/yasuoWarning.ogg" type="audio/ogg">
+    </audio>
+    <audio id="yasuoRunning" style="display: none;">
+        <source src="./audio/yasuoRunning.ogg" type="audio/ogg">
+    </audio>
+    <audio id="yasuoCollisionApple" style="display: none;">
+        <source src="./audio/yasuoCollisionApple.ogg" type="audio/ogg">
+    </audio>
+    <audio id="yasuoGameOver" style="display: none;">
+        <source src="./audio/yasuoGameOver.ogg" type="audio/ogg">
     </audio>
 
     <script src="snake.js"></script>

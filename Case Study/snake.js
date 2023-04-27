@@ -24,16 +24,14 @@ let gameDiv = document.getElementById("gameDiv");
 let gameForm = document.getElementById("gameForm");
 let themeSound = document.getElementById("pageThemeSound");
 let soundBtn = document.getElementById("soundCtrl");
-let direction = 'up';
-let appleEated = false;
+let randomDirection = ['up', 'left', 'right'];
+let direction;
 let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
 let bang = document.getElementById("bxh");
 let xPre, yPre;
 let xPosition, yPosition, yasuo, warning, run;
-let moveDistance = 5;
-yPosition = Math.floor(Math.random()*27) * 20;
-xPosition = -100;
+let moveDistance = 2
 
 loadImage();
 
@@ -95,13 +93,19 @@ function loadImage() {
 }
 
 function runningYasuo() {
+    if (gameOver()) {
+        return;
+    }
+    if (isCollision(appleLocationX, appleLocationY)) {
+        document.getElementById("yasuoCollisionApple").play();
+        ctx.clearRect(appleLocationX, appleLocationY, 20, 20);
+        randomApple();
+    }
     ctx.clearRect(xPosition, yPosition, 100, 80);
     if (xPosition >= -100) {
         xPosition += moveDistance;
     }
     if (xPosition === 600) {
-        xPosition = -100;
-        yPosition = Math.floor(Math.random()*27) * 20;
         return;
     }
     ctx.drawImage(yasuo, xPosition, yPosition);
@@ -109,9 +113,13 @@ function runningYasuo() {
 }
 
 function yasuoComing() {
+    xPosition = -100;
+    yPosition = (Math.floor(Math.random()*27) * 20) + 1;
+    document.getElementById("yasuoWaring").play();
     ctx.drawImage(warning, 0, yPosition);
     setTimeout(function () {
         ctx.clearRect(0, yPosition, 20, 80);
+        document.getElementById("yasuoRunning").play();
         runningYasuo();
     }, 3000);
     run = setTimeout(arguments.callee, 10000);
@@ -242,12 +250,11 @@ function checkAppleLocation() {
 }
 
 function randomApple() {
-    if (appleEated) {
-        while (checkAppleLocation() === false) {
-            appleLocationX = Math.floor(Math.random()*30) * 20; 
-            appleLocationY = Math.floor(Math.random()*30) * 20;
-        }
-        appleEated = false;
+    appleLocationX = Math.floor(Math.random()*30) * 20; 
+    appleLocationY = Math.floor(Math.random()*30) * 20;
+    while (checkAppleLocation() === false) {
+        appleLocationX = Math.floor(Math.random()*30) * 20; 
+        appleLocationY = Math.floor(Math.random()*30) * 20;
     }
     ctx.beginPath();
     ctx.drawImage(appleImg, appleLocationX, appleLocationY);
@@ -267,19 +274,30 @@ function eatApple() {
         if (snake[snake.length-1].y === snake[snake.length-2].y && snake[snake.length-1].x > snake[snake.length-2].x) {
             snake.push(new  Snake(snake[snake.length-1].x + 20, snake[snake.length - 1].y));
         }
-        appleEated = true;
         document.getElementById("appleEatedSound").play();
         randomApple();
         document.getElementById("score").innerHTML =`<img src="./images/appleScore.png"> ${snake.length - 3}`;
     }
 }
 
+function isCollision(x, y) {
+    let distX = Math.abs((xPosition + 50) - (x + 10));
+    let distY = Math.abs((yPosition + 39) - (y + 10));
+    return (distX <= 60 && distY <= 49);
+}
+
 function gameOver() {
     if (snake[0].x >= 600 || snake[0].x < 0 || snake[0].y < 0 || snake[0].y >= 600) {
+        document.getElementById("gameOverSound").play();
         return true;
     }
-    for (let i = 1; i < snake.length; i++) {
-        if (snake[0].x === snake[i].x && snake[0].y === snake[i].y ) {
+    for (let i = 0; i < snake.length - 1; i++) {
+        if (snake[0].x === snake[i+1].x && snake[0].y === snake[i+1].y ) {
+            document.getElementById("gameOverSound").play();
+            return true;
+        }
+        if (isCollision(snake[i].x, snake[i].y)) {
+            document.getElementById("yasuoGameOver").play();
             return true;
         }
     }
@@ -309,40 +327,32 @@ onkeydown = function(e) {
 function gameCycle() {
     if (gameOver()) {
         clearTimeout(run);
-        document.getElementById("gameOverSound").play();
         startBtn.className = "buttonRestart";
         ctx.clearRect(0, 0, 600, 600);
         ctx.beginPath();
-        //ctx.font = 'bold 60pt Comic Sans MS';
-        //ctx.fillStyle = '#d22f42';
-        //ctx.fillText('GAMEOVER', 73, 320);
-        ctx.drawImage(yasuoOver, 100, 100);
+        ctx.drawImage(yasuoOver, 0, 80);
         gameHistory.push(new UserScore(userName, snake.length - 3, gameMode));
         localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
         drawRanking();
+        startBtn.disabled = false;
         console.log(gameHistory);
         clearInterval(move);
     } else {
+        eatApple();
         drawSnake();
         controlSnake();
-        eatApple();
     }
 }
 
 function startGame() {
     move = null;
     ctx.clearRect(0, 0, 600, 600);
-    
+    startBtn.disabled = true;
+    xPosition = -100;
+    yPosition = (Math.floor(Math.random()*27) * 20) + 1;
     document.getElementById("gameStartSound").play();
-    appleLocationX = Math.floor(Math.random()*30) * 20; 
-    appleLocationY = Math.floor(Math.random()*30) * 20;
-    while (checkAppleLocation() === false) {
-        appleLocationX = Math.floor(Math.random()*30) * 20; 
-        appleLocationY = Math.floor(Math.random()*30) * 20;
-    }
     randomApple();
-    direction = 'up';
-    appleEated = false;
+    direction = randomDirection[Math.floor(Math.random()*3)];
     snake = [];
     snake.push(new  Snake(300, 300));
     snake.push(new  Snake(300, 320));
@@ -354,5 +364,5 @@ function startGame() {
     } else {
         move = setInterval(gameCycle,50);
     }
-    setTimeout(yasuoComing, 5000);
+    setTimeout(yasuoComing, 10000);
 }
