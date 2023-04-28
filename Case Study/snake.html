@@ -51,11 +51,24 @@
                 </table>
             </div>
         </div>
-        <div align="center" style="height: 80px; padding-left: 20px; padding-right: 20px;">
+        <div align="center">
             <br>
             <button type="button" onclick="backToForm()" id="buttonBack"></button>
             <button type="button" onclick="startGame()" class="buttonStart" id="buttonStart"></button>
             <button type="button" onclick="controlsAudio()" class="soundBtn" id="soundCtrl"></button>
+            <button class="popup" onclick="showPopup()">
+                <span class="popuptext" id="myPopup">
+                    1. Ấn Start để bắt đầu game. <br>
+                    2. Sử dụng phím mũi tên để điều khiển con rắn. <br>
+                    3. Điểm được tính bằng số táo ăn được. <br>
+                    4. Mỗi 10s sẽ có chướng ngại vật đi ngang màn hình từ trái qua phải. <br>
+                        - 3s trước khi chướng ngại vật xuất hiện sẽ có âm thanh và cảnh báo ở cạnh bên trái. <br>
+                        - Nếu rắn bị chướng ngại vật đâm phải sẽ kết thúc trò chơi. <br>
+                        - Nếu quả táo bị chướng ngại vật đâm phải, quả táo mới sẽ xuất hiện ở vị trí khác. <br>
+                    5. Cố gắng sống sót lâu nhất có thể trước khi bị chướng ngại vật đâm phải. <br>
+                    6. Lưu ý, nếu bấm 2 phím mũi tên quá nhanh sẽ dẫn đến gameover. <br>
+                </span>
+            </button>
         </div>
     </div>
 

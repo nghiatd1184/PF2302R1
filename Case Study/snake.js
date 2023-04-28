@@ -31,8 +31,7 @@ let snake = [];
 let bang = document.getElementById("bxh");
 let xPre, yPre;
 let xPosition, yPosition, yasuo, warning, run;
-let moveDistance = 2
-
+let moveDistance = 5;
 loadImage();
 
 function backToForm() {
@@ -93,9 +92,6 @@ function loadImage() {
 }
 
 function runningYasuo() {
-    if (gameOver()) {
-        return;
-    }
     if (isCollision(appleLocationX, appleLocationY)) {
         document.getElementById("yasuoCollisionApple").play();
         ctx.clearRect(appleLocationX, appleLocationY, 20, 20);
@@ -105,11 +101,11 @@ function runningYasuo() {
     if (xPosition >= -100) {
         xPosition += moveDistance;
     }
-    if (xPosition === 600) {
+    if (xPosition === 600 || gameOver()) {
         return;
     }
     ctx.drawImage(yasuo, xPosition, yPosition);
-    setTimeout(arguments.callee, 10);
+    setTimeout(arguments.callee, 5);
 }
 
 function yasuoComing() {
@@ -118,11 +114,13 @@ function yasuoComing() {
     document.getElementById("yasuoWaring").play();
     ctx.drawImage(warning, 0, yPosition);
     setTimeout(function () {
+        if (gameOver()) {
+            return;
+        }
         ctx.clearRect(0, yPosition, 20, 80);
         document.getElementById("yasuoRunning").play();
         runningYasuo();
     }, 3000);
-    run = setTimeout(arguments.callee, 10000);
 }
 
 function playGame() {
@@ -326,7 +324,7 @@ onkeydown = function(e) {
 
 function gameCycle() {
     if (gameOver()) {
-        clearTimeout(run);
+        clearInterval(run);
         startBtn.className = "buttonRestart";
         ctx.clearRect(0, 0, 600, 600);
         ctx.beginPath();
@@ -364,5 +362,10 @@ function startGame() {
     } else {
         move = setInterval(gameCycle,50);
     }
-    setTimeout(yasuoComing, 10000);
+    run = setInterval(yasuoComing, 10000);
+}
+
+function showPopup() {
+    let popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
 }
