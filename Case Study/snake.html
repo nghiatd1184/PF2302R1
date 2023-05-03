@@ -8,20 +8,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px;background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 130px;" id="gameForm">
-        <h2 style="color: black;">Tên người chơi: <input type="text" id="userName" placeholder="Điền tên của bạn"></h2>
+    <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px; background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 130px;" id="gameForm">
         <h2 style="color: black;">
+            Tên người chơi: <input type="text" id="userName" placeholder="Điền tên của bạn"><br>
             Độ khó: 
             <select name="mode" id="gameMode">
                 <option value="" disabled selected hidden>Chọn độ khó</option>
                 <option value="easyMode">Dễ</option>
                 <option value="normalMode">Thường</option>
                 <option value="hardMode">Khó</option>
-            </select>
+            </select><br>
         </h2>
         <button type="button" onclick="playGame()" id="buttonPlay" title="Nhấn để chơi"></button>
     </div>
-    <div style="margin: 0 auto; width: max-content; height: max-content; background-image: url(./images/bgDiv.jpg); display: none; padding: 30px;" id="gameDiv">
+    <div style="margin: 0 auto; width: max-content; height: max-content; background-image: url(./images/bgDiv.jpg); background-repeat: no-repeat; display: none; padding: 30px;" id="gameDiv">
         <div>
             <div style="height: 100px;">
                 <h2 style="padding-top: 55px; font-size: 28pt; color: white;" id="score"><img src="./images/appleScore.png"> 0</h2>
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <audio controls autoplay loop id="pageThemeSound" style="display: none;">
+    <audio controls loop id="pageThemeSound" style="display: none;">
         <source src="./audio/pageTheme.mp3" type="audio/mp3">
     </audio>
     <audio id="appleEatedSound" style="display: none;">
@@ -89,9 +89,6 @@
     </audio>
     <audio id="yasuoWaring" style="display: none;">
         <source src="./audio/yasuoWarning.ogg" type="audio/ogg">
-    </audio>
-    <audio id="yasuoRunning" style="display: none;">
-        <source src="./audio/yasuoRunning.ogg" type="audio/ogg">
     </audio>
     <audio id="yasuoCollisionApple" style="display: none;">
         <source src="./audio/yasuoCollisionApple.ogg" type="audio/ogg">

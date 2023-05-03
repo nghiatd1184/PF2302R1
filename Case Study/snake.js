@@ -31,7 +31,7 @@ let snake = [];
 let bang = document.getElementById("bxh");
 let xPre, yPre;
 let xPosition, yPosition, yasuo, warning, run;
-let moveDistance = 5;
+let moveDistance = 4;
 loadImage();
 
 function backToForm() {
@@ -41,6 +41,7 @@ function backToForm() {
     document.getElementById("userName").focus();
     document.getElementById("gameMode").value = "";
     startBtn.className = "buttonStart";
+    themeSound.pause();
 }
 
 function controlsAudio() {
@@ -101,11 +102,11 @@ function runningYasuo() {
     if (xPosition >= -100) {
         xPosition += moveDistance;
     }
-    if (xPosition === 600 || gameOver()) {
+    if (xPosition >= 600 || gameOver()) {
         return;
     }
     ctx.drawImage(yasuo, xPosition, yPosition);
-    setTimeout(arguments.callee, 5);
+    setTimeout(arguments.callee, 1);
 }
 
 function yasuoComing() {
@@ -118,7 +119,6 @@ function yasuoComing() {
             return;
         }
         ctx.clearRect(0, yPosition, 20, 80);
-        document.getElementById("yasuoRunning").play();
         runningYasuo();
     }, 3000);
 }
