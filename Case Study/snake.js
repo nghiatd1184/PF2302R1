@@ -22,10 +22,11 @@ let startBtn = document.getElementById("buttonStart");
 let playBtn = document.getElementById("buttonPlay");
 let gameDiv = document.getElementById("gameDiv");
 let gameForm = document.getElementById("gameForm");
-let themeSound = document.getElementById("pageThemeSound");
+let junglehemeSound = document.getElementById("jungleThemeSound");
+let yasuoThemeSound = document.getElementById("yasuoThemeSound");
 let soundBtn = document.getElementById("soundCtrl");
 let randomDirection = ['up', 'left', 'right'];
-let direction;
+let direction, yasuoAddOn;
 let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
 let bang = document.getElementById("bxh");
@@ -41,11 +42,20 @@ function backToForm() {
     document.getElementById("userName").focus();
     document.getElementById("gameMode").value = "";
     startBtn.className = "buttonStart";
-    themeSound.pause();
+    if (yasuoAddOn.checked) {
+        yasuoThemeSound.pause();
+    } else {
+        jungleThemeSound.pause();
+    }
+    ctx.clearRect(0, 0, 600, 600);
 }
 
 function controlsAudio() {
-    themeSound.muted = !themeSound.muted;
+    if (yasuoAddOn.checked) {
+        yasuoThemeSound.muted = !yasuoThemeSound.muted;
+    } else {
+        jungleThemeSound.muted = !jungleThemeSound.muted;
+    }
     if (soundBtn.className === "soundBtn") {
         soundBtn.className = "soundOffBtn";
     } else {
@@ -99,18 +109,18 @@ function runningYasuo() {
         randomApple();
     }
     ctx.clearRect(xPosition, yPosition, 100, 80);
-    if (xPosition >= -100) {
+    if (xPosition >= -101) {
         xPosition += moveDistance;
     }
-    if (xPosition >= 600 || gameOver()) {
+    if (xPosition >= 601 || gameOver()) {
         return;
     }
     ctx.drawImage(yasuo, xPosition, yPosition);
-    setTimeout(arguments.callee, 1);
+    setTimeout(arguments.callee, 2);
 }
 
 function yasuoComing() {
-    xPosition = -100;
+    xPosition = -101;
     yPosition = (Math.floor(Math.random()*27) * 20) + 1;
     document.getElementById("yasuoWaring").play();
     ctx.drawImage(warning, 0, yPosition);
@@ -132,8 +142,14 @@ function playGame() {
         gameForm.style.display = "none";
         gameDiv.style.display = "block";
         drawRanking();
-        themeSound.play();
-        themeSound.volume = 0.3;
+        yasuoAddOn = document.getElementById("yasuoAddOn");
+        if (yasuoAddOn.checked) {
+            yasuoThemeSound.play();
+            yasuoThemeSound.volume = 0.3;
+        } else {
+            jungleThemeSound.play();
+            jungleThemeSound.volume = 0.3;
+        }
     }
 }
 
@@ -306,20 +322,17 @@ onkeydown = function(e) {
     let key = e.keyCode;
     if (key === 38 && direction !== 'down') {
         direction = 'up';
-    }
-    if (key === 40 && direction !== 'up') {
+    } else if (key === 40 && direction !== 'up') {
         direction = 'down';
-    }
-    if (key === 37 && direction !== 'right') {
+    } else if (key === 37 && direction !== 'right') {
         direction = 'left';
-    }
-    if (key === 39 && direction !== 'left') {
+    } else if (key === 39 && direction !== 'left') {
         direction = 'right';
     }
     if (key === 38 || key === 37 || key === 39 || key === 40) {
         document.getElementById("snakeMovingSound").play();
     }
-//up = 38, down = 40, left = 37, right = 39
+    //up = 38, down = 40, left = 37, right = 39
 }
 
 function gameCycle() {
@@ -327,8 +340,15 @@ function gameCycle() {
         clearInterval(run);
         startBtn.className = "buttonRestart";
         ctx.clearRect(0, 0, 600, 600);
-        ctx.beginPath();
-        ctx.drawImage(yasuoOver, 0, 80);
+        if (yasuoAddOn.checked) {
+            ctx.beginPath();
+            ctx.drawImage(yasuoOver, 0, 80);
+        } else {
+            ctx.beginPath();
+            ctx.font = 'bold 60pt Comic Sans MS';
+            ctx.fillStyle = '#d22f42';
+            ctx.fillText('GAMEOVER', 73, 320);
+        }
         gameHistory.push(new UserScore(userName, snake.length - 3, gameMode));
         localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
         drawRanking();
@@ -346,7 +366,7 @@ function startGame() {
     move = null;
     ctx.clearRect(0, 0, 600, 600);
     startBtn.disabled = true;
-    xPosition = -100;
+    xPosition = -101;
     yPosition = (Math.floor(Math.random()*27) * 20) + 1;
     document.getElementById("gameStartSound").play();
     randomApple();
@@ -356,13 +376,21 @@ function startGame() {
     snake.push(new  Snake(300, 320));
     snake.push(new  Snake(300, 340));
     if (gameMode === "easyMode") {
-        move = setInterval(gameCycle,250);
+        move = setInterval(gameCycle,200);
     } else if (gameMode === "normalMode") {
         move = setInterval(gameCycle,150);
     } else {
-        move = setInterval(gameCycle,50);
+        move = setInterval(gameCycle,80);
     }
-    run = setInterval(yasuoComing, 10000);
+    if (yasuoAddOn.checked) {
+        if (gameMode === "easyMode") {
+            run = setInterval(yasuoComing, 40000);
+        } else if (gameMode === "normalMode") {
+            run = setInterval(yasuoComing, 20000);
+        } else {
+            run = setInterval(yasuoComing, 10000);
+        }
+    }
 }
 
 function showPopup() {
