@@ -16,28 +16,26 @@ class UserScore {
 let canvas = document.getElementById("board");
 let ctx = canvas.getContext("2d");
 let highestScore = document.getElementById("highestScore");
-let move, max, headUp, headDown, headLeft, headRight, tailUp, tailDown, tailLeft, tailRight, appleImg, bodyRight, bodyLeft, leftUp, rightUp, leftDown, rightDown;
-let appleLocationX, appleLocationY, gameMode, userName, yasuoOver;
+let bang = document.getElementById("bxh");
 let startBtn = document.getElementById("buttonStart");
 let playBtn = document.getElementById("buttonPlay");
-let gameDiv = document.getElementById("gameDiv");
-let gameForm = document.getElementById("gameForm");
+let soundBtn = document.getElementById("soundCtrl");
+let giaoDienGame = document.getElementById("giaoDienGame");
+let formDangKy = document.getElementById("formDangKy");
 let junglehemeSound = document.getElementById("jungleThemeSound");
 let yasuoThemeSound = document.getElementById("yasuoThemeSound");
-let soundBtn = document.getElementById("soundCtrl");
-let randomDirection = ['up', 'left', 'right'];
-let direction, yasuoAddOn;
 let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
 let snake = [];
-let bang = document.getElementById("bxh");
-let xPre, yPre;
-let xPosition, yPosition, yasuo, warning, run;
-let moveDistance = 4;
-loadImage();
+let randomDirection = ['up', 'left', 'right'];
+let yasuoMoveDistance = 4;
+let snakeMove, max, headUp, headDown, headLeft, headRight, tailUp, tailDown, tailLeft, tailRight, appleImg, bodyRight, bodyLeft, leftUp, rightUp, leftDown, rightDown, appleLocationX, appleLocationY, gameMode, userName, yasuoOver, xPre, yPre, yasuoLocationX, yasuoLocationY, yasuo, warning, run, direction, yasuoAddOn;
+let preDirection = direction;
+let preOfPreDirection;
 
+//hàm cho nút quay lại form đăng ký
 function backToForm() {
-    gameForm.style.display = "block";
-    gameDiv.style.display = "none";
+    formDangKy.style.display = "block";
+    giaoDienGame.style.display = "none";
     document.getElementById("userName").value = "";
     document.getElementById("userName").focus();
     document.getElementById("gameMode").value = "";
@@ -47,9 +45,32 @@ function backToForm() {
     } else {
         jungleThemeSound.pause();
     }
+    controlsAudio();
     ctx.clearRect(0, 0, 600, 600);
 }
 
+//hàm cho nút vào giao diện game
+function goToGameInterface() {
+    userName = document.getElementById("userName").value;
+    gameMode = document.getElementById("gameMode").value;
+    if (userName === "" || gameMode === "") {
+        alert("Vui lòng nhập tên người chơi và chọn độ khó!")
+    } else {
+        formDangKy.style.display = "none";
+        giaoDienGame.style.display = "block";
+        drawRanking();
+        yasuoAddOn = document.getElementById("yasuoAddOn");
+        if (yasuoAddOn.checked) {
+            yasuoThemeSound.play();
+            yasuoThemeSound.volume = 0.3;
+        } else {
+            jungleThemeSound.play();
+            jungleThemeSound.volume = 0.3;
+        }
+    }
+}
+
+//hàm điều khiển âm thanh và nút điều khiển âm thanh
 function controlsAudio() {
     if (yasuoAddOn.checked) {
         yasuoThemeSound.muted = !yasuoThemeSound.muted;
@@ -63,6 +84,50 @@ function controlsAudio() {
     }
 }
 
+//hàm cho nút pop-up
+function showPopup() {
+    let popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+
+//hàm vẽ bảng xếp hạng
+function drawRanking() {
+    bang.innerHTML = "";
+    gameHistory.sort(function (a, b) {return b.Score - a.Score});
+    let gameModeText;
+    if (gameMode === "easyMode") {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>DỄ`;
+        gameModeText = "Dễ";
+    } else if (gameMode === "normalMode") {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>THƯỜNG`;
+        gameModeText = "Thường";
+    } else {
+        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>KHÓ`;
+        gameModeText = "Khó";
+    }
+    let count = 0;
+    for (let i = 0; i < gameHistory.length; i++) {
+        if (gameHistory[i].GameMode === gameMode) {
+            let taoDong = document.createElement("tr");
+            let taoCot1 = document.createElement("td");
+            let taoCot2 = document.createElement("td");
+            let taoCot3 = document.createElement("td");
+            taoCot1.innerHTML = gameHistory[i].UserName;
+            taoCot2.innerHTML = gameHistory[i].Score;
+            taoCot3.innerHTML = gameModeText;
+            taoDong.appendChild(taoCot1);
+            taoDong.appendChild(taoCot2);
+            taoDong.appendChild(taoCot3);
+            bang.appendChild(taoDong);
+            count++;
+        }
+        if (count === 14) {
+            break;
+        }
+    }
+}
+
+//hàm gọi hình ảnh
 function loadImage() {
     yasuo = new Image();
     yasuo.src = "./images/yasuoRunning.png";
@@ -101,94 +166,68 @@ function loadImage() {
     rightUp = new Image();
     rightUp.src = './images/rightup.png';
 }
+loadImage();
 
+// hàm check va chạm của chướng ngại vật
+function isCollision(x, y) {
+    let distX = Math.abs((yasuoLocationX + 50) - (x + 10));
+    let distY = Math.abs((yasuoLocationY + 39) - (y + 10));
+    return (distX <= 60 && distY <= 49);
+}
+
+//hàm chạy chướng ngại vật
 function runningYasuo() {
     if (isCollision(appleLocationX, appleLocationY)) {
         document.getElementById("yasuoCollisionApple").play();
         ctx.clearRect(appleLocationX, appleLocationY, 20, 20);
         randomApple();
     }
-    ctx.clearRect(xPosition, yPosition, 100, 80);
-    if (xPosition >= -101) {
-        xPosition += moveDistance;
+    ctx.clearRect(yasuoLocationX, yasuoLocationY, 100, 80);
+    if (yasuoLocationX >= -101) {
+        yasuoLocationX += yasuoMoveDistance;
     }
-    if (xPosition >= 601 || gameOver()) {
+    if (yasuoLocationX >= 601 || gameOver()) {
         return;
     }
-    ctx.drawImage(yasuo, xPosition, yPosition);
+    ctx.drawImage(yasuo, yasuoLocationX, yasuoLocationY);
     setTimeout(arguments.callee, 2);
 }
 
+//hàm cảnh báo chướng ngại vật sắp chạy
 function yasuoComing() {
-    xPosition = -101;
-    yPosition = (Math.floor(Math.random()*27) * 20) + 1;
+    yasuoLocationX = -101;
+    yasuoLocationY = (Math.floor(Math.random()*27) * 20) + 1;
     document.getElementById("yasuoWaring").play();
-    ctx.drawImage(warning, 0, yPosition);
+    ctx.drawImage(warning, 0, yasuoLocationY);
     setTimeout(function () {
         if (gameOver()) {
             return;
         }
-        ctx.clearRect(0, yPosition, 20, 80);
+        ctx.clearRect(0, yasuoLocationY, 20, 80);
         runningYasuo();
     }, 3000);
 }
 
-function playGame() {
-    userName = document.getElementById("userName").value;
-    gameMode = document.getElementById("gameMode").value;
-    if (userName === "" || gameMode === "") {
-        alert("Vui lòng nhập tên người chơi và chọn độ khó!")
-    } else {
-        gameForm.style.display = "none";
-        gameDiv.style.display = "block";
-        drawRanking();
-        yasuoAddOn = document.getElementById("yasuoAddOn");
-        if (yasuoAddOn.checked) {
-            yasuoThemeSound.play();
-            yasuoThemeSound.volume = 0.3;
-        } else {
-            jungleThemeSound.play();
-            jungleThemeSound.volume = 0.3;
-        }
+//hàm điều khiển hướng chạy của rắn
+function controlSnake() {
+    xPre = snake[snake.length-1].x;
+    yPre = snake[snake.length-1].y;
+    for (let i = snake.length - 1; i > 0; i--) {
+        snake[i].x = snake[(i-1)].x;
+        snake[i].y = snake[(i-1)].y;
+    }
+    if (direction === 'up') {
+        snake[0].y -= 20;
+    } else if (direction === 'down') {
+        snake[0].y += 20;
+    } else if (direction === 'left') {
+        snake[0].x -= 20;
+    } else if (direction === 'right') {
+        snake[0].x += 20;
     }
 }
 
-function drawRanking() {
-    bang.innerHTML = "";
-    gameHistory.sort(function (a, b) {return b.Score - a.Score});
-    let gameModeText;
-    if (gameMode === "easyMode") {
-        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>DỄ`;
-        gameModeText = "Dễ";
-    } else if (gameMode === "normalMode") {
-        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>THƯỜNG`;
-        gameModeText = "Thường";
-    } else {
-        document.getElementById("gameModeTitle").innerHTML = `BẢNG XẾP HẠNG<br>KHÓ`;
-        gameModeText = "Khó";
-    }
-    let count = 0;
-    for (let i = 0; i < gameHistory.length; i++) {
-        if (gameHistory[i].GameMode === gameMode) {
-            let taoDong = document.createElement("tr");
-            let taoCot1 = document.createElement("td");
-            let taoCot2 = document.createElement("td");
-            let taoCot3 = document.createElement("td");
-            taoCot1.innerHTML = gameHistory[i].UserName;
-            taoCot2.innerHTML = gameHistory[i].Score;
-            taoCot3.innerHTML = gameModeText;
-            taoDong.appendChild(taoCot1);
-            taoDong.appendChild(taoCot2);
-            taoDong.appendChild(taoCot3);
-            bang.appendChild(taoDong);
-            count++;
-        }
-        if (count === 14) {
-            break;
-        }
-    }
-}
-
+//hàm vẽ rắn
 function drawSnake() {
     ctx.clearRect(xPre, yPre, 20, 20);
     for (let i = 0; i < snake.length; i++) {
@@ -233,40 +272,21 @@ function drawSnake() {
     }
 }
 
-function controlSnake() {
-    xPre = snake[snake.length-1].x;
-    yPre = snake[snake.length-1].y;
-    for (let i = snake.length - 1; i > 0; i--) {
-        snake[i].x = snake[(i-1)].x;
-        snake[i].y = snake[(i-1)].y;
-    }
-    if (direction === 'up') {
-        snake[0].y -= 20;
-    }
-    if (direction === 'down') {
-        snake[0].y += 20;
-    }
-    if (direction === 'left') {
-        snake[0].x -= 20;
-    }
-    if (direction === 'right') {
-        snake[0].x += 20;
-    }
-}
-
+//hàm check vị trí quả táo có trùng vào thân rắn không
 function checkAppleLocation() {
     for (let i = 0; i < snake.length; i++) {
         if (snake[i].x === appleLocationX && snake[i].y === appleLocationY) {
-            return appleLocation = false;
+            return appleLocation = true;
         }
     }
-    return appleLocation = true;
+    return appleLocation = false;
 }
 
+//hàm vẽ vị trí ngẫu nhiên của quả táo
 function randomApple() {
     appleLocationX = Math.floor(Math.random()*30) * 20; 
     appleLocationY = Math.floor(Math.random()*30) * 20;
-    while (checkAppleLocation() === false) {
+    while (checkAppleLocation()) {
         appleLocationX = Math.floor(Math.random()*30) * 20; 
         appleLocationY = Math.floor(Math.random()*30) * 20;
     }
@@ -274,6 +294,7 @@ function randomApple() {
     ctx.drawImage(appleImg, appleLocationX, appleLocationY);
 }
 
+//hàm check con rắn đã ăn quả táo chưa
 function eatApple() {
     if (snake[0].x === appleLocationX && snake[0].y === appleLocationY) {
         if (snake[snake.length-1].x === snake[snake.length-2].x && snake[snake.length-1].y > snake[snake.length-2].y) {
@@ -294,12 +315,7 @@ function eatApple() {
     }
 }
 
-function isCollision(x, y) {
-    let distX = Math.abs((xPosition + 50) - (x + 10));
-    let distY = Math.abs((yPosition + 39) - (y + 10));
-    return (distX <= 60 && distY <= 49);
-}
-
+//hàm check điều kiện gameover
 function gameOver() {
     if (snake[0].x >= 600 || snake[0].x < 0 || snake[0].y < 0 || snake[0].y >= 600) {
         document.getElementById("gameOverSound").play();
@@ -318,23 +334,7 @@ function gameOver() {
     return false;
 }
 
-onkeydown = function(e) {
-    let key = e.keyCode;
-    if (key === 38 && direction !== 'down') {
-        direction = 'up';
-    } else if (key === 40 && direction !== 'up') {
-        direction = 'down';
-    } else if (key === 37 && direction !== 'right') {
-        direction = 'left';
-    } else if (key === 39 && direction !== 'left') {
-        direction = 'right';
-    }
-    if (key === 38 || key === 37 || key === 39 || key === 40) {
-        document.getElementById("snakeMovingSound").play();
-    }
-    //up = 38, down = 40, left = 37, right = 39
-}
-
+//chu trình game
 function gameCycle() {
     if (gameOver()) {
         clearInterval(run);
@@ -354,7 +354,7 @@ function gameCycle() {
         drawRanking();
         startBtn.disabled = false;
         console.log(gameHistory);
-        clearInterval(move);
+        clearInterval(snakeMove);
     } else {
         eatApple();
         drawSnake();
@@ -362,12 +362,13 @@ function gameCycle() {
     }
 }
 
+//hàm cho nút bắt đầu game
 function startGame() {
-    move = null;
+    snakeMove = null;
     ctx.clearRect(0, 0, 600, 600);
     startBtn.disabled = true;
-    xPosition = -101;
-    yPosition = (Math.floor(Math.random()*27) * 20) + 1;
+    yasuoLocationX = -101;
+    yasuoLocationY = (Math.floor(Math.random()*27) * 20) + 1;
     document.getElementById("gameStartSound").play();
     randomApple();
     direction = randomDirection[Math.floor(Math.random()*3)];
@@ -376,11 +377,11 @@ function startGame() {
     snake.push(new  Snake(300, 320));
     snake.push(new  Snake(300, 340));
     if (gameMode === "easyMode") {
-        move = setInterval(gameCycle,200);
+        snakeMove = setInterval(gameCycle,200);
     } else if (gameMode === "normalMode") {
-        move = setInterval(gameCycle,150);
+        snakeMove = setInterval(gameCycle,150);
     } else {
-        move = setInterval(gameCycle,80);
+        snakeMove = setInterval(gameCycle,80);
     }
     if (yasuoAddOn.checked) {
         if (gameMode === "easyMode") {
@@ -393,7 +394,20 @@ function startGame() {
     }
 }
 
-function showPopup() {
-    let popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
+//điều hướng con rắn bằng nút mũi tên
+onkeydown = function(k) {
+    preDirection = direction;
+    if (k.key === "ArrowUp" && direction !== 'down') {
+        direction = 'up';
+        preOfPreDirection = 
+    } else if (k.key === "ArrowDown" && direction !== 'up') {
+        direction = 'down';
+    } else if (k.key === "ArrowLeft" && direction !== 'right') {
+        direction = 'left';
+    } else if (k.key === "ArrowRight" && direction !== 'left') {
+        direction = 'right';
+    }
+    if (k.key === "ArrowUp" || k.key === "ArrowDown" || k.key === "ArrowLeft" || k.key === "ArrowRight") {
+        document.getElementById("snakeMovingSound").play();
+    }
 }

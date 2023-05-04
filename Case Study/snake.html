@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div align="center" style="display: block; margin: 0 auto; width: 400px; height: 347px; padding: 15px; background-image: url(./images/registerForm.png);background-repeat: no-repeat; padding-top: 130px;" id="gameForm">
+    <div id="formDangKy">
         <h2 style="color: black;">
             Tên người chơi: <input type="text" id="userName" placeholder="Điền tên của bạn"><br>
             Độ khó: 
@@ -20,9 +20,9 @@
             </select><br>
             Yasuo Add-on: <input type="checkbox" id="yasuoAddOn" title="Chế độ Yasuo">
         </h2>
-        <button type="button" onclick="playGame()" id="buttonPlay" title="Nhấn để chơi"></button>
+        <button type="button" onclick="goToGameInterface()" id="buttonPlay" title="Nhấn để chơi"></button>
     </div>
-    <div style="margin: 0 auto; width: max-content; height: max-content; background-image: url(./images/bgDiv.jpg); background-repeat: no-repeat; display: none; padding: 30px;" id="gameDiv">
+    <div id="giaoDienGame">
         <div>
             <div style="height: 100px;">
                 <h2 style="padding-top: 55px; font-size: 28pt; color: white;" id="score"><img src="./images/appleScore.png"> 0</h2>
@@ -31,7 +31,7 @@
             <div style="float: right; border: 15px #588a38 solid; height: 600px;">
                 <table cellpadding = "5" cellspacing = 5 style="color: white;">
                     <tr style="">
-                        <td colspan="3" align="center" style="font-size: 22pt; font-weight: bold;" id="gameModeTitle">
+                        <td colspan="3" style="font-size: 22pt; font-weight: bold; text-align: center;" id="gameModeTitle">
                             BẢNG XẾP HẠNG
                         </td>
                     </tr>
@@ -52,7 +52,7 @@
                 </table>
             </div>
         </div>
-        <div align="center">
+        <div style="text-align: center;">
             <br>
             <button type="button" onclick="backToForm()" id="buttonBack" title="Quay lại form đăng ký"></button>
             <button type="button" onclick="startGame()" class="buttonStart" id="buttonStart" title="Nhấn để bắt đầu chơi"></button>

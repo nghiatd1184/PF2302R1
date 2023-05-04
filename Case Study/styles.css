@@ -184,3 +184,25 @@ select {
     padding: 3px;
     background-color: #ffffff;
 }
+
+#giaoDienGame {
+    margin: 0 auto;
+    width: max-content;
+    height: max-content;
+    background-image: url(./images/bgDiv.jpg);
+    background-repeat: no-repeat;
+    display: none;
+    padding: 30px;
+}
+
+#formDangKy {
+    margin: 0 auto;
+    display: block;
+    width: 400px;
+    height: 347px;
+    padding: 15px;
+    background-image: url(./images/registerForm.png);
+    background-repeat: no-repeat;
+    padding-top: 130px;
+    text-align: center;
+}
