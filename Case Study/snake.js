@@ -29,8 +29,6 @@ let snake = [];
 let randomDirection = ['up', 'left', 'right'];
 let yasuoMoveDistance = 4;
 let snakeMove, max, headUp, headDown, headLeft, headRight, tailUp, tailDown, tailLeft, tailRight, appleImg, bodyRight, bodyLeft, leftUp, rightUp, leftDown, rightDown, appleLocationX, appleLocationY, gameMode, userName, yasuoOver, xPre, yPre, yasuoLocationX, yasuoLocationY, yasuo, warning, run, direction, yasuoAddOn;
-let preDirection = direction;
-let preOfPreDirection;
 
 //hàm cho nút quay lại form đăng ký
 function backToForm() {
@@ -396,10 +394,8 @@ function startGame() {
 
 //điều hướng con rắn bằng nút mũi tên
 onkeydown = function(k) {
-    preDirection = direction;
     if (k.key === "ArrowUp" && direction !== 'down') {
         direction = 'up';
-        preOfPreDirection = 
     } else if (k.key === "ArrowDown" && direction !== 'up') {
         direction = 'down';
     } else if (k.key === "ArrowLeft" && direction !== 'right') {
